@@ -14,6 +14,7 @@ public class ReallyActivity extends BaseActivity {
     @Override
     protected ViewModel initViewModel() {
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
+        weatherViewModel.setLifecycleOwner(this);
         weatherViewModel.getWeatherMutableLiveData().observe(this, weather -> {
             TextView textView = findViewById(R.id.textView);
             StringBuilder result = new StringBuilder();
@@ -32,7 +33,7 @@ public class ReallyActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    protected void initData() {
         queryWeather("大连");
     }
 

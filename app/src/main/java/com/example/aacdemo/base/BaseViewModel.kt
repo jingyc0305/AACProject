@@ -14,7 +14,7 @@ open class BaseViewModel : ViewModel(), IViewModelAction {
 
     override fun startLoading() {
 
-        startLoading(null!!)
+        startLoading("正在加载...")
     }
 
     override fun startLoading(msg: String) {

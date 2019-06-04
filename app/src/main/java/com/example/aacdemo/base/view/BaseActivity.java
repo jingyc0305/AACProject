@@ -22,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         super.onCreate(savedInstanceState);
         setContentView(initLayoutResId());
         initViewModelEvent();
+        initData();
     }
 
 
@@ -72,7 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     protected abstract int initLayoutResId();
 
-    protected abstract void initView();
+    protected abstract void initData();
 
 
     private BaseActivity getContext(){
@@ -85,7 +86,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
 
     @Override
     public void startLoading() {
-        startLoading(null);
+        startLoading("");
     }
 
     @Override
