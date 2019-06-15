@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.aacdemo.R
 import com.example.aacdemo.databinding.ActivityMainBinding
+import com.example.aacdemo.qrcode.QrCodeActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         subscrib()
 
         really_btn.setOnClickListener { startActivity(Intent(this, ReallyActivity::class.java)) }
-
+        qr_code_btn.setOnClickListener { startActivity(Intent(this, QrCodeActivity::class.java)) }
     }
 
 

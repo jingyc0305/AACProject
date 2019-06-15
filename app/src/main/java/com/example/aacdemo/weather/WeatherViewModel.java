@@ -1,7 +1,7 @@
 package com.example.aacdemo.weather;
 
 import androidx.lifecycle.MutableLiveData;
-import com.example.aacdemo.base.BaseViewModel;
+import com.example.aac_library.base.BaseViewModel;
 
 public class WeatherViewModel extends BaseViewModel {
 
@@ -20,4 +20,6 @@ public class WeatherViewModel extends BaseViewModel {
     public MutableLiveData<Weather> getWeatherMutableLiveData() {
         return weatherMutableLiveData;
     }
+
+
 }

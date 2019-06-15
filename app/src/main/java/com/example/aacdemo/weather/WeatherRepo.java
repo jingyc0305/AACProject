@@ -1,11 +1,11 @@
 package com.example.aacdemo.weather;
 
 import androidx.lifecycle.MutableLiveData;
-import com.example.aacdemo.base.BaseException;
-import com.example.aacdemo.base.BaseRepo;
-import com.example.aacdemo.base.interf.RequestCallBack;
+import com.example.aac_library.base.BaseException;
+import com.example.aac_library.base.BaseRepo;
+import com.example.aac_library.base.interf.RequestCallBack;
 
-public class WeatherRepo extends BaseRepo<IWeatherData> {
+public class WeatherRepo extends BaseRepo<IWeatherData>{
 
     public WeatherRepo(IWeatherData remoteDataSource) {
         super(remoteDataSource);

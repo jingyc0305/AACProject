@@ -9,6 +9,7 @@
         <variable name="user" type="com.example.aacdemo.demo.User"/>
         <variable name="namevm" type="com.example.aacdemo.demo.NameViewModel"/>
         <variable name="handles" type="com.example.aacdemo.demo.MyHandlers"/>
+        <variable name="weather_vm" type="com.example.aacdemo.weather.WeatherViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent"
                                                        android:layout_width="match_parent">
@@ -75,6 +76,16 @@
                 android:layout_marginBottom="8dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"/>
+        <Button
+                android:text="进入实战"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/qr_code_btn" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/button" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.866"
+                app:layout_constraintVertical_bias="0.505"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,9 +1,9 @@
 package com.example.aacdemo.weather;
 
-import com.example.aacdemo.base.BaseViewModel;
-import com.example.aacdemo.base.interf.RequestCallBack;
-import com.example.aacdemo.http.ApiService;
-import com.example.aacdemo.http.BaseRemoteDataSource;
+import com.example.aac_library.base.BaseViewModel;
+import com.example.aac_library.base.interf.RequestCallBack;
+import com.example.aacdemo.api.ApiService;
+import com.example.aac_library.base.BaseRemoteDataSource;
 
 public class WeatherDataSource extends BaseRemoteDataSource implements IWeatherData{
     public WeatherDataSource(BaseViewModel baseViewModel) {

@@ -2,6 +2,9 @@ package com.example.aacdemo.weather;
 
 import java.util.List;
 
+/**
+ * 实体类
+ */
 public class Weather {
     private InnerWeather data;
 
