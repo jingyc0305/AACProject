@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.aac_library.base.interf.IView;
 import com.example.aac_library.base.interf.IViewModel;
 import com.example.aac_library.base.event.BaseActionEvent;
+import com.sunchen.netbus.NetStatusBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
         setContentView(initLayoutResId());
         initDataBinding();
         initViewModelEvent();
+        initView();
         initData();
     }
 
@@ -71,7 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     protected abstract ViewModel initViewModel();
 
     protected abstract int initLayoutResId();
-
+    protected abstract void initView();
     protected abstract void initData();
 
     protected abstract void initDataBinding();
@@ -121,7 +123,17 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     public void finishWithResultOk() {
 
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        NetStatusBus.getInstance().register(this);
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        NetStatusBus.getInstance().unregister(this);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -6,7 +6,11 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.aacdemo.R;
 import com.example.aac_library.base.view.BaseActivity;
 import com.example.aacdemo.databinding.ActivityQrcodeBinding;
-
+/**
+ * @author: JingYuchun
+ * @date: 
+ * @desc:
+ */
 public class QrCodeActivity extends BaseActivity {
     QrCodeViewModel qrCodeViewModel;
     QrCode qrCode;
@@ -27,6 +31,11 @@ public class QrCodeActivity extends BaseActivity {
     @Override
     protected int initLayoutResId() {
         return R.layout.activity_qrcode;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Override

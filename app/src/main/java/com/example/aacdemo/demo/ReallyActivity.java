@@ -1,6 +1,8 @@
 package com.example.aacdemo.demo;
 
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.aacdemo.R;
@@ -8,8 +10,11 @@ import com.example.aac_library.base.view.BaseActivity;
 import com.example.aacdemo.weather.Weather;
 import com.example.aacdemo.weather.WeatherViewModel;
 import com.google.gson.Gson;
+import com.sunchen.netbus.annotation.NetSubscribe;
+import com.sunchen.netbus.type.Mode;
 
 public class ReallyActivity extends BaseActivity {
+    private static final String TAG = "ReallyActivity";
     private WeatherViewModel weatherViewModel;
     @Override
     protected ViewModel initViewModel() {
@@ -22,6 +27,11 @@ public class ReallyActivity extends BaseActivity {
     @Override
     protected int initLayoutResId() {
         return R.layout.really_mvvm;
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     @Override
@@ -53,5 +63,15 @@ public class ReallyActivity extends BaseActivity {
         }
 
         textView.setText(result.toString());
+    }
+    @NetSubscribe(mode = Mode.WIFI_CONNECT)
+    public void doSometing() {
+        Toast.makeText(this,"wifi 已连接",Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "wifi 已连接");
+    }
+    @NetSubscribe(mode = Mode.NONE)
+    public void netWorkDisConnect(){
+        Toast.makeText(this,"当前无网络",Toast.LENGTH_SHORT).show();
+        Log.d(TAG,"当前无网络");
     }
 }

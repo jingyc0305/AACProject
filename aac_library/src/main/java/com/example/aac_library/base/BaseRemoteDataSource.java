@@ -33,7 +33,7 @@ public abstract class BaseRemoteDataSource {
     public <T> T getService(Class<T> cls,String baseUrl){
         return RetrifitManager.getInstance().getService(cls,baseUrl);
     }
-    private <T> ObservableTransformer<BaseResponse<T>,T> applySchedulers(){
+    private <T> ObservableTransformer<WanBaseResponse<T>,T> applySchedulers(){
         return RetrifitManager.getInstance().applySchedulers();
     }
 

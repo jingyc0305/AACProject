@@ -3,7 +3,11 @@
           package="com.example.aacdemo">
 
     <!--网络权限-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <application
             android:name="com.example.aac_library.base.BaseApp"
             android:allowBackup="true"
@@ -22,6 +26,10 @@
         </activity>
         <activity android:name=".demo.ReallyActivity"/>
         <activity android:name=".qrcode.QrCodeActivity"/>
+        <activity android:name=".demo.AnkoActivity"/>
+        <activity android:name=".asyntask.AsynActivity"/>
+        <activity android:name=".demo.design_pattern.observer_pattern.ObserverActivity"/>
+        <activity android:name=".wanandroid.home.activity.HomeActivity"/>
     </application>
 
 </manifest>

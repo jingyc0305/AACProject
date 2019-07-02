@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/navi_res_file"
+            app:startDestination="@id/home">
+    <fragment android:id="@+id/home" android:name="com.example.aacdemo.wanandroid.home.fragment.HomeFragment"
+              android:label="HomeFragment"/>
+    <fragment android:id="@+id/nav" android:name="com.example.aacdemo.wanandroid.home.fragment.NavFragment"
+              android:label="NavFragment"/>
+    <fragment android:id="@+id/mine" android:name="com.example.aacdemo.wanandroid.home.fragment.MineFragment"
+              android:label="MineFragment"/>
+</navigation>

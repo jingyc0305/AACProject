@@ -8,9 +8,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.aacdemo.R
+import com.example.aacdemo.asyntask.AsynActivity
 import com.example.aacdemo.databinding.ActivityMainBinding
+import com.example.aacdemo.demo.design_pattern.observer_pattern.ObserverActivity
 import com.example.aacdemo.qrcode.QrCodeActivity
+import com.example.aacdemo.wanandroid.home.activity.HomeActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
+import org.jetbrains.anko.startActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,6 +59,18 @@ class MainActivity : AppCompatActivity() {
 
         really_btn.setOnClickListener { startActivity(Intent(this, ReallyActivity::class.java)) }
         qr_code_btn.setOnClickListener { startActivity(Intent(this, QrCodeActivity::class.java)) }
+        anko_btn.onClick {
+            startActivity<AnkoActivity>("param" to "anko")
+        }
+        asyn_btn.onClick {
+            startActivity<AsynActivity>("param" to "asyn")
+        }
+        obser_btn.onClick {
+            startActivity<ObserverActivity>("param" to "obser")
+        }
+        wan_android.onClick {
+            startActivity<HomeActivity>("param" to "android")
+        }
     }
 
 
