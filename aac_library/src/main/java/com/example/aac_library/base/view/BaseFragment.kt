@@ -19,6 +19,15 @@ import com.example.aac_library.base.interf.IViewModel
  * @desc: 基础Fragment
  */
 abstract class BaseFragment:Fragment(),IView {
+    /**
+     * 视图是否初始化完成
+     */
+    private var isViewPrepare : Boolean = false
+    /**
+     * 是否加载过数据
+     */
+    private var isLoadedData:Boolean = false
+    private var mRootView: View? = null//缓存fragment View
     override fun startLoading() {
     }
 
@@ -34,19 +43,40 @@ abstract class BaseFragment:Fragment(),IView {
 
     override fun finishWithResultOk() {
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        isViewPrepare = true
         initView()
-    }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(initLayoutResId(),null)
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         initDataBinding()
         initViewModelEvent()
-        initData()
+        //加载数据
+        layzLoadData()
+    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (mRootView == null) {
+            mRootView = inflater.inflate(initLayoutResId(),container,false)
+        }
+        //缓存的rootView需要判断是否已经被加过parent， 如果有parent则从parent删除，防止发生这个rootview已经有parent的错误。
+        if(mRootView?.parent !=null){
+            val mViewGroup = mRootView?.parent as ViewGroup
+            mViewGroup.removeView(mRootView)
+        }
+        return mRootView
+    }
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if(isVisibleToUser){
+            layzLoadData()
+        }
+    }
+    /**
+     * 懒加载
+     */
+    private fun layzLoadData(){
+        if(userVisibleHint && isViewPrepare&&!isLoadedData){
+            initData()
+            isLoadedData = true
+        }
     }
     private fun initViewModelEvent(){
         val viewModels = initViewModels()

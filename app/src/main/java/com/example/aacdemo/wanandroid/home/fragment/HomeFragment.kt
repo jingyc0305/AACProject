@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.frag_home.*
 class HomeFragment :BaseFragment(){
     private var homeViewModel:HomeViewModel? = null
     private var adapter: HomeArticalAdapter? = null
-    private var articalList : ArrayList<HomeArticalBean>? = ArrayList()
+    private var articalList : MutableList<HomeArticalBean>? = ArrayList()
     override fun initViewModel(): ViewModel? {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         homeViewModel?.lifecycleOwner = this

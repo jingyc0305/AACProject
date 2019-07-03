@@ -1,5 +1,6 @@
 package com.example.aacdemo.wanandroid.home.repository
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.aac_library.base.BaseException
 import com.example.aac_library.base.BaseRepo
@@ -13,14 +14,15 @@ import com.example.aacdemo.wanandroid.home.bean.HomeBannerBean
  * @desc: 数据仓库
  */
 class HomeRepository(remoteDataSource: IHomeData) : BaseRepo<IHomeData>(remoteDataSource) {
+
     /**
      * 获取首页文章
      */
     fun queryHomeArticleData(pageIndex: Int):MutableLiveData<HomeArticalBean> {
         val mutableLiveData: MutableLiveData<HomeArticalBean> = MutableLiveData()
-
         remoteDataSource.queryHomeArticleData(pageIndex, object : RequestCallBack<HomeArticalBean> {
             override fun onFailed(error: BaseException?) {
+
             }
 
             override fun onSucess(homeArticalBean: HomeArticalBean?) {
@@ -35,10 +37,9 @@ class HomeRepository(remoteDataSource: IHomeData) : BaseRepo<IHomeData>(remoteDa
      */
     fun queryHomeBannerData():MutableLiveData<HomeBannerBean> {
         val mutableLiveData: MutableLiveData<HomeBannerBean> = MutableLiveData()
-
         remoteDataSource.queryHomeBannerData(object : RequestCallBack<HomeBannerBean> {
-            val mutableLiveData: MutableLiveData<HomeBannerBean> = MutableLiveData()
             override fun onFailed(error: BaseException?) {
+                error?.printStackTrace()
             }
 
             override fun onSucess(homeBannerBean: HomeBannerBean?) {

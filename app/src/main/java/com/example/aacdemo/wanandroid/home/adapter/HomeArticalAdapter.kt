@@ -13,7 +13,7 @@ import com.example.aacdemo.wanandroid.home.bean.HomeArticalBean
  * @date: 2019/7/2 17:22
  * @desc: 首页文章适配器
  */
-class HomeArticalAdapter(private val articals:ArrayList<HomeArticalBean>) : RecyclerView.Adapter<HomeArticalAdapter.MyViewHodel>() {
+class HomeArticalAdapter(private val articals:MutableList<HomeArticalBean>) : RecyclerView.Adapter<HomeArticalAdapter.MyViewHodel>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHodel {
