@@ -14,7 +14,7 @@ import com.example.aacdemo.api.WanAndroidService
 class HomeDataSource(baseViewModel: BaseViewModel) : BaseRemoteDataSource(baseViewModel),IHomeData{
 
     override fun <T> queryHomeArticleData(pageIndex:Int,requestCallBack: RequestCallBack<T>) {
-        execute(getService(WanAndroidService::class.java,HttpConfig.wanAndroidBaseUrl).getHomeArticalData(0),requestCallBack)
+        execute(getService(WanAndroidService::class.java,HttpConfig.wanAndroidBaseUrl).getHomeArticalData(pageIndex),requestCallBack)
     }
 
     override fun <T> queryHomeBannerData(requestCallBack: RequestCallBack<T>) {

@@ -1,6 +1,5 @@
 package com.example.aacdemo.wanandroid.home.repository
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.aac_library.base.BaseException
 import com.example.aac_library.base.BaseRepo
@@ -18,15 +17,16 @@ class HomeRepository(remoteDataSource: IHomeData) : BaseRepo<IHomeData>(remoteDa
     /**
      * 获取首页文章
      */
-    fun queryHomeArticleData(pageIndex: Int):MutableLiveData<HomeArticalBean> {
-        val mutableLiveData: MutableLiveData<HomeArticalBean> = MutableLiveData()
+    fun queryHomeArticleData(pageIndex: Int):MutableLiveData<MutableList<HomeArticalBean.DatasBean>> {
+        val mutableLiveData: MutableLiveData<MutableList<HomeArticalBean.DatasBean>> = MutableLiveData()
         remoteDataSource.queryHomeArticleData(pageIndex, object : RequestCallBack<HomeArticalBean> {
+
             override fun onFailed(error: BaseException?) {
 
             }
 
-            override fun onSucess(homeArticalBean: HomeArticalBean?) {
-                mutableLiveData.value = homeArticalBean
+            override fun onSucess(homeArticalBeans: HomeArticalBean?) {
+                mutableLiveData.value = homeArticalBeans?.datas
             }
         })
         return mutableLiveData

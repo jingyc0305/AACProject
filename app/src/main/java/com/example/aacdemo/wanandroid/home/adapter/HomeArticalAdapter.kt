@@ -13,21 +13,19 @@ import com.example.aacdemo.wanandroid.home.bean.HomeArticalBean
  * @date: 2019/7/2 17:22
  * @desc: 首页文章适配器
  */
-class HomeArticalAdapter(private val articals:MutableList<HomeArticalBean>) : RecyclerView.Adapter<HomeArticalAdapter.MyViewHodel>() {
+class HomeArticalAdapter(private val articals:MutableList<HomeArticalBean.DatasBean>) : RecyclerView.Adapter<HomeArticalAdapter.MyViewHodel>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHodel {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_artical_lis,null)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_artical_lis,parent,false)
         return MyViewHodel(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHodel, position: Int) {
-        holder.title.text = articals[0].datas[position].title
-        holder.subTitle.text = articals[0].datas[position].chapterName
+        holder.title.text = articals[position].title
+        holder.subTitle.text = articals[position].chapterName
     }
-    override fun getItemCount(): Int {
-        return articals.size
-    }
+    override fun getItemCount() = articals.size
 
     class MyViewHodel(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

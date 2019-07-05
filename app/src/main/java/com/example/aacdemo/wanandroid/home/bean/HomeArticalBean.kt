@@ -14,8 +14,9 @@ data class HomeArticalBean(
     val pageCount: Int,
     val size: Int,
     val total: Int,
-    val datas: List<DatasBean>
+    val datas: MutableList<DatasBean>
 ) : WanBaseResponse<HomeArticalBean>() {
+
 
     data class DatasBean(
         val apkLink: String,
@@ -49,5 +50,6 @@ data class HomeArticalBean(
             val url: String
         )
     }
+
 }
 

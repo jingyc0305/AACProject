@@ -2,7 +2,6 @@ package com.example.aac_library.http;
 
 import com.example.aac_library.BuildConfig;
 import com.example.aac_library.base.BaseApp;
-import com.example.aac_library.base.BaseResponse;
 import com.example.aac_library.base.WanBaseResponse;
 import com.example.aac_library.http.execption.ParamterInvalidException;
 import com.example.aac_library.http.execption.ServerErrorException;
@@ -27,6 +26,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author: JingYuchun
+ * @date:  2019年7月5日
+ * @desc: RetrifitManager統一管理
+ */
 public class RetrifitManager {
 
     private static final long READ_TIMEOUT = 10;
