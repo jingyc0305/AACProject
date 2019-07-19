@@ -1,11 +1,11 @@
 package com.example.aac_library.base.interf
 
 import androidx.lifecycle.MutableLiveData
-import com.example.aac_library.base.event.BaseActionEvent
+import com.example.aac_library.base.event.BaseEvent
 
 interface IViewModel {
 
-    val actionLiveData: MutableLiveData<BaseActionEvent>
+    val actionLiveData: MutableLiveData<BaseEvent>
 
     fun startLoading()
 
