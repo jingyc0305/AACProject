@@ -3,6 +3,7 @@ package com.example.aacdemo.qrcode;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
+import com.example.aac_library.base.BaseViewModel;
 import com.example.aacdemo.R;
 import com.example.aac_library.base.view.BaseActivity;
 import com.example.aacdemo.databinding.ActivityQrcodeBinding;
@@ -17,7 +18,7 @@ public class QrCodeActivity extends BaseActivity {
     ActivityQrcodeBinding viewDataBinding;
 
     @Override
-    protected ViewModel initViewModel() {
+    protected BaseViewModel initViewModel() {
         qrCodeViewModel = ViewModelProviders.of(this).get(QrCodeViewModel.class);
         qrCodeViewModel.setLifecycleOwner(this);
         qrCodeViewModel.getQrCodeLiveData().observe(this,
@@ -57,4 +58,5 @@ public class QrCodeActivity extends BaseActivity {
             viewDataBinding.unbind();
         }
     }
+
 }

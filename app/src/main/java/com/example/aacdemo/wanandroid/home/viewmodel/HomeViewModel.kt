@@ -16,7 +16,7 @@ import com.example.aacdemo.wanandroid.home.repository.HomeRepository
 class HomeViewModel : BaseViewModel() {
 
     private val articalLiveData: MutableLiveData<MutableList<HomeArticalBean.DatasBean>> = MutableLiveData()
-    private val bannerLiveData: MutableLiveData<HomeBannerBean> = MutableLiveData()
+    private val bannerLiveData: MutableLiveData<MutableList<HomeBannerBean>> = MutableLiveData()
     private val homeRepository: HomeRepository = HomeRepository(HomeDataSource(this))
 
     /**
@@ -42,7 +42,7 @@ class HomeViewModel : BaseViewModel() {
         return articalLiveData
     }
 
-    fun getBannerLiveData(): MutableLiveData<HomeBannerBean> {
+    fun getBannerLiveData(): MutableLiveData<MutableList<HomeBannerBean>> {
         return bannerLiveData
     }
 }

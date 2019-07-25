@@ -10,14 +10,9 @@ import io.reactivex.observers.DisposableObserver;
  * @param <T>
  */
 public class BaseSubscriber<T> extends DisposableObserver<T> {
-    private BaseViewModel baseViewModel;
 
     private RequestCallBack requestCallBack;
-    private BaseSubscriber(BaseViewModel baseViewModel){
-        this.baseViewModel = baseViewModel;
-    }
-    public BaseSubscriber(BaseViewModel baseViewModel, RequestCallBack requestCallBack){
-        this.baseViewModel = baseViewModel;
+    public BaseSubscriber(RequestCallBack requestCallBack){
         this.requestCallBack = requestCallBack;
     }
     @Override
@@ -30,13 +25,15 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        Log.d("JingYuchun", e.getMessage());
-        requestCallBack.onFailed(new BaseException(HttpCode.UNKNOWN_ERROR,e.getMessage()));
-        if (baseViewModel == null) {
-            throw new RuntimeException("the baseViewModel can not be null,please check your param of constructor.");
+        Log.d("okhttp", e.getMessage());
+        if(null!= e && e instanceof NullPointerException){
+            return;
         }else {
-            //baseViewModel.showToast(e.getMessage());
+            if (requestCallBack != null) {
+                requestCallBack.onFailed(new BaseException(HttpCode.UNKNOWN_ERROR,e.getMessage()));
+            }
         }
+
     }
 
     @Override

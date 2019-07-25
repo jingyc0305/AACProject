@@ -13,24 +13,43 @@ import com.example.aacdemo.wanandroid.home.bean.HomeArticalBean
  * @date: 2019/7/2 17:22
  * @desc: 首页文章适配器
  */
-class HomeArticalAdapter(private val articals:MutableList<HomeArticalBean.DatasBean>) : RecyclerView.Adapter<HomeArticalAdapter.MyViewHodel>() {
+class HomeArticalAdapter(private var onItemClickListener : OnItemClickListener) : RecyclerView.Adapter<HomeArticalAdapter.MyViewHolder>() {
 
+    var articals = mutableListOf<HomeArticalBean.DatasBean>()
+    fun setNewData(datas:MutableList<HomeArticalBean.DatasBean>){
+        this.articals?.clear()
+        this.articals?.addAll(datas)
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHodel {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_artical_lis,parent,false)
-        return MyViewHodel(view)
+        return MyViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MyViewHodel, position: Int) {
-        holder.title.text = articals[position].title
-        holder.subTitle.text = articals[position].chapterName
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.title.text = articals?.get(position)?.title
+        holder.subTitle.text = articals?.get(position)?.chapterName
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.onItemClick(position)
+        }
+        holder.itemView.setOnLongClickListener{
+            onItemClickListener?.onItemLongClick(position)
+        }
     }
-    override fun getItemCount() = articals.size
+    override fun getItemCount(): Int{
+        return articals?.size
+    }
 
-    class MyViewHodel(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val title:TextView = itemView.findViewById(R.id.artical_title)
-        val subTitle:TextView = itemView.findViewById(R.id.artocal_sub_title)
+        val subTitle:TextView = itemView.findViewById(R.id.artical_sub_title)
 
+
+    }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+        fun onItemLongClick(position: Int):Boolean
     }
 }

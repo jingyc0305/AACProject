@@ -30,6 +30,9 @@
         <activity android:name=".asyntask.AsynActivity"/>
         <activity android:name=".demo.design_pattern.observer_pattern.ObserverActivity"/>
         <activity android:name=".wanandroid.home.activity.HomeActivity"/>
+        <activity android:name=".demo.ServiceActivity"/>
+        <service android:name=".service.MyService"
+        android:process=":remote"/>
     </application>
 
 </manifest>

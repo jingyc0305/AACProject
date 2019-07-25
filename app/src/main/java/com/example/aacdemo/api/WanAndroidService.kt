@@ -1,7 +1,8 @@
 package com.example.aacdemo.api
 
-import com.example.aac_library.base.WanBaseResponse
+import com.example.aac_library.base.BaseResponse
 import com.example.aacdemo.wanandroid.home.bean.HomeArticalBean
+import com.example.aacdemo.wanandroid.home.bean.HomeBannerBean
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,8 +15,8 @@ import retrofit2.http.Path
 interface WanAndroidService {
 
     @GET("/banner/json")
-    fun getHomeBanner():Observable<WanBaseResponse<HomeArticalBean>>
+    fun getHomeBanner():Observable<BaseResponse<MutableList<HomeBannerBean>>>
 
     @GET("/article/list/{pageIndex}/json")
-    fun getHomeArticalData(@Path("pageIndex") pageIndex:Int):Observable<WanBaseResponse<HomeArticalBean>>
+    fun getHomeArticalData(@Path("pageIndex") pageIndex:Int):Observable<BaseResponse<HomeArticalBean>>
 }

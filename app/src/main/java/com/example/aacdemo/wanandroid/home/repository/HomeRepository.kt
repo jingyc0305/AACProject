@@ -21,11 +21,12 @@ class HomeRepository(remoteDataSource: IHomeData) : BaseRepo<IHomeData>(remoteDa
         val mutableLiveData: MutableLiveData<MutableList<HomeArticalBean.DatasBean>> = MutableLiveData()
         remoteDataSource.queryHomeArticleData(pageIndex, object : RequestCallBack<HomeArticalBean> {
 
-            override fun onFailed(error: BaseException?) {
+            override fun onFailed(error: BaseException) {
+                throw error
 
             }
 
-            override fun onSucess(homeArticalBeans: HomeArticalBean?) {
+            override fun onSucess(homeArticalBeans: HomeArticalBean) {
                 mutableLiveData.value = homeArticalBeans?.datas
             }
         })
@@ -35,14 +36,14 @@ class HomeRepository(remoteDataSource: IHomeData) : BaseRepo<IHomeData>(remoteDa
     /**
      * 获取首页广告banner
      */
-    fun queryHomeBannerData():MutableLiveData<HomeBannerBean> {
-        val mutableLiveData: MutableLiveData<HomeBannerBean> = MutableLiveData()
-        remoteDataSource.queryHomeBannerData(object : RequestCallBack<HomeBannerBean> {
+    fun queryHomeBannerData(): MutableLiveData<MutableList<HomeBannerBean>> {
+        val mutableLiveData: MutableLiveData<MutableList<HomeBannerBean>> = MutableLiveData()
+        remoteDataSource.queryHomeBannerData(object : RequestCallBack<MutableList<HomeBannerBean>> {
             override fun onFailed(error: BaseException?) {
                 error?.printStackTrace()
             }
 
-            override fun onSucess(homeBannerBean: HomeBannerBean?) {
+            override fun onSucess(homeBannerBean: MutableList<HomeBannerBean>?) {
                 mutableLiveData.value = homeBannerBean
             }
         })

@@ -3,6 +3,8 @@ package com.example.aac_library.base;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import com.example.aac_library.BuildConfig;
+import com.example.aac_library.utils.util.LoggerUtil;
 import com.sunchen.netbus.NetStatusBus;
 //import skin.support.SkinCompatManager;
 //import skin.support.app.SkinAppCompatViewInflater;
@@ -20,14 +22,9 @@ public class BaseApp extends Application {
         appContext = this;
         NetStatusBus.getInstance().init(this);
         registerActivityLifecycleCallbacks(callbacks);
-//        SkinCompatManager.withoutActivity(this)
-//                .addInflater(new SkinAppCompatViewInflater())           // 基础控件换肤初始化
-//                .addInflater(new SkinMaterialViewInflater())            // material design 控件换肤初始化[可选]
-//                .addInflater(new SkinConstraintViewInflater())          // ConstraintLayout 控件换肤初始化[可选]
-//                .addInflater(new SkinCardViewInflater())                // CardView v7 控件换肤初始化[可选]
-//                .setSkinStatusBarColorEnable(false)                     // 关闭状态栏换肤，默认打开[可选]
-//                .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
-//                .loadSkin();
+
+        // 初始化Looger工具
+        LoggerUtil.init(BuildConfig.DEBUG);
     }
 
     public static BaseApp getAppContext() {

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Dialog.FullScreen" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+    <style name="DialogBaseAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_dialog_open</item>
+        <item name="android:windowExitAnimation">@anim/anim_dialog_close</item>
+    </style>
+</resources>

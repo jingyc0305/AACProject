@@ -1,7 +1,13 @@
 package com.example.aac_library.base;
 
+import com.example.aac_library.base.interf.IBaseView;
 import com.example.aac_library.base.interf.RequestCallBack;
+import com.example.aac_library.http.HttpCode;
 import com.example.aac_library.http.RetrifitManager;
+import com.example.aac_library.http.execption.ParamterInvalidException;
+import com.example.aac_library.http.execption.ServerErrorException;
+import com.example.aac_library.http.execption.TimeOutException;
+import com.example.aac_library.http.execption.TokenInvalidException;
 import io.reactivex.*;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -19,10 +25,10 @@ public abstract class BaseRemoteDataSource {
 
     private CompositeDisposable compositeDisposable;
 
-    private BaseViewModel baseViewModel;
+    private IBaseView ibaseView;
 
-    public BaseRemoteDataSource(BaseViewModel baseViewModel){
-        this.baseViewModel = baseViewModel;
+    public BaseRemoteDataSource(IBaseView ibaseView){
+        this.ibaseView = ibaseView;
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -33,13 +39,9 @@ public abstract class BaseRemoteDataSource {
     public <T> T getService(Class<T> cls,String baseUrl){
         return RetrifitManager.getInstance().getService(cls,baseUrl);
     }
-    private <T> ObservableTransformer<WanBaseResponse<T>,T> applySchedulers(){
-        return RetrifitManager.getInstance().applySchedulers();
-    }
-
     protected void execute(Observable observable, RequestCallBack requestCallBack){
 
-        execute(observable,new BaseSubscriber(baseViewModel,requestCallBack),true);
+        execute(observable,new BaseSubscriber(requestCallBack),true);
 
     }
 
@@ -70,14 +72,14 @@ public abstract class BaseRemoteDataSource {
     }
 
     private void startLoading() {
-        if (baseViewModel != null) {
-            baseViewModel.startLoading();
+        if (ibaseView != null) {
+            ibaseView.startLoading();
         }
     }
 
     private void dismissLoading() {
-        if (baseViewModel != null) {
-            baseViewModel.dismissLoading();
+        if (ibaseView != null) {
+            ibaseView.dismissLoading();
         }
     }
 
@@ -87,7 +89,7 @@ public abstract class BaseRemoteDataSource {
                 .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> startLoading())
-                .doFinally(() -> BaseRemoteDataSource.this.dismissLoading());
+                .doFinally(() -> dismissLoading());
     }
 
     private <T> ObservableTransformer<T, T> loadingTransformerWithoutDismiss() {
@@ -100,4 +102,41 @@ public abstract class BaseRemoteDataSource {
                 });
     }
 
+    public <T> ObservableTransformer<BaseResponse<T>, T> applySchedulers() {
+        return observable -> observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(result -> {
+                    switch (result.getCode()) {
+                        case HttpCode.SUCCESS: {
+                            return createData(result.getData());
+                        }
+                        case HttpCode.TOKEN_INVALID: {
+                            throw new TokenInvalidException();
+                        }
+                        case HttpCode.NETWORK_TIME_OUT: {
+                            throw new TimeOutException();
+                        }
+                        case HttpCode.PARAMETER_INVALID: {
+                            throw new ParamterInvalidException();
+                        }
+                        default: {
+                            throw new ServerErrorException();
+                        }
+                    }
+                });
+    }
+
+    private <T> ObservableSource<T> createData(final T data) {
+        return Observable.create(emitter -> {
+            try {
+                emitter.onNext(data);
+                emitter.onComplete();
+            } catch (Exception e) {
+                e.printStackTrace();
+                emitter.onError(e);
+            }
+        });
+
+    }
 }

@@ -1,6 +1,6 @@
 package com.example.aacdemo.wanandroid.home.bean
 
-import com.example.aac_library.base.WanBaseResponse
+import com.example.aac_library.base.BaseResponse
 
 /**
  * @author: JingYuchun
@@ -15,7 +15,7 @@ data class HomeArticalBean(
     val size: Int,
     val total: Int,
     val datas: MutableList<DatasBean>
-) : WanBaseResponse<HomeArticalBean>() {
+) : BaseResponse<HomeArticalBean>() {
 
 
     data class DatasBean(

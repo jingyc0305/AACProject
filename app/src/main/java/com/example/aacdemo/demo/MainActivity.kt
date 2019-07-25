@@ -3,10 +3,10 @@ package com.example.aacdemo.demo
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.aac_library.eventbus.LiveDataBus
 import com.example.aacdemo.R
 import com.example.aacdemo.asyntask.AsynActivity
 import com.example.aacdemo.databinding.ActivityMainBinding
@@ -33,25 +33,28 @@ class MainActivity : AppCompatActivity() {
         //初始化数据绑定
         initDataBindnig()
 
-        val viewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
-
-        //获取vm中的数据
-        Log.d(tag, viewModel.name)
-
-        model = ViewModelProviders.of(this).get(NameViewModel::class.java)
-
         val nameObserver = Observer<String> {
             //更新ui
                 newName ->
             hello.text = newName
         }
+        val viewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
+
+        viewModel.name?.observe(this, nameObserver)
+
+        model = ViewModelProviders.of(this).get(NameViewModel::class.java)
+
+
         //观察数据变化 更新UI
         model.currentName.observe(this, nameObserver)
 
 
         //手动改变数据 更新UI
         button.setOnClickListener {
-            model.currentName.value = "I am LiveData!~"
+            //model.currentName.value = "I am LiveData!~"
+
+            //测试LiveDataBus
+            sendMessage()
         }
 
         //观察数据变化 更新UI
@@ -71,9 +74,19 @@ class MainActivity : AppCompatActivity() {
         wan_android.onClick {
             startActivity<HomeActivity>("param" to "android")
         }
+        binder_btn.onClick {
+            startActivity<ServiceActivity>("param" to "binder")
+        }
+        //测试LiveDataBus
+        LiveDataBus.get().with("isReceived",String::class.java)?.observe(this, Observer {
+            flag -> viewModel.name?.value = "isReceived: $flag!"
+        })
     }
 
 
+    private fun sendMessage(){
+        LiveDataBus.get().with("isReceived")?.value = "I'm from LiveDataBus Data"
+    }
     private fun initDataBindnig() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)

@@ -1,6 +1,6 @@
 package com.example.aacdemo.wanandroid.home.fragment
 
-import androidx.lifecycle.ViewModel
+import com.example.aac_library.base.BaseViewModel
 import com.example.aac_library.base.view.BaseFragment
 import com.example.aacdemo.R
 
@@ -10,7 +10,7 @@ import com.example.aacdemo.R
  * @desc:
  */
 class NavFragment :BaseFragment(){
-    override fun initViewModel(): ViewModel? {
+    override fun initViewModel(): BaseViewModel? {
         return null
     }
 
@@ -22,6 +22,7 @@ class NavFragment :BaseFragment(){
     }
 
     override fun initData() {
+        startLoading()
     }
 
     override fun initDataBinding() {

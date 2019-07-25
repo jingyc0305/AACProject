@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/artical_title"
                 android:layout_margin="8dp"
-                android:id="@+id/artocal_sub_title"/>
+                android:id="@+id/artical_sub_title"/>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

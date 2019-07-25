@@ -1,10 +1,14 @@
 package com.example.aacdemo.demo;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
+import com.example.aac_library.base.BaseViewModel;
 import com.example.aacdemo.R;
 import com.example.aac_library.base.view.BaseActivity;
 import com.example.aacdemo.weather.Weather;
@@ -13,11 +17,11 @@ import com.google.gson.Gson;
 import com.sunchen.netbus.annotation.NetSubscribe;
 import com.sunchen.netbus.type.Mode;
 
-public class ReallyActivity extends BaseActivity {
+public class ReallyActivity extends BaseActivity{
     private static final String TAG = "ReallyActivity";
     private WeatherViewModel weatherViewModel;
     @Override
-    protected ViewModel initViewModel() {
+    public BaseViewModel initViewModel() {
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel.class);
         weatherViewModel.setLifecycleOwner(this);
         weatherViewModel.getWeatherMutableLiveData().observe(this, weather -> showWeatherResult(weather));
@@ -31,19 +35,18 @@ public class ReallyActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        Button button2 = findViewById(R.id.button2);
     }
 
     @Override
     protected void initData() {
-        queryWeather("大连");
+        //queryWeather("大连");
     }
 
     @Override
     protected void initDataBinding() {
 
     }
-
     /**
      * 调用
      */

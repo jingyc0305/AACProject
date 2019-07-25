@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.aac_library.base.BaseException
 import com.example.aac_library.base.BaseRepo
 import com.example.aac_library.base.interf.RequestCallBack
+import com.example.aac_library.http.execption.ParamterInvalidException
+import com.example.aac_library.http.execption.ServerErrorException
 
 class WeatherRepo(remoteDataSource: IWeatherData) : BaseRepo<IWeatherData>(remoteDataSource) {
 
@@ -17,7 +19,7 @@ class WeatherRepo(remoteDataSource: IWeatherData) : BaseRepo<IWeatherData>(remot
             }
 
             override fun onFailed(error: BaseException) {
-                error.printStackTrace()
+                throw error
             }
         })
         return mutableLiveData

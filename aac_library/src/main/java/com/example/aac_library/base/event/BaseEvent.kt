@@ -3,13 +3,11 @@ package com.example.aac_library.base.event
 /**
  * 向view层传递action的model
  */
-class VMEvent(var action: Int){
+class BaseEvent {
 
     var message: String? = null
+    var action: Int? = null
 
-    constructor(action: Int){
-        this.action = action
-    }
     companion object {
         const val SHOW_LOADING_DIALOG = 1
 

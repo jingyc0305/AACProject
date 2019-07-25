@@ -27,7 +27,7 @@ class CacheInterceptor : Interceptor {
 class OfflineCacheInterceptor: Interceptor{
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        var  request = chain.request();
+        var  request = chain.request()
         if(!NetworkUtils.isNetworkAvailable()){
             request = request
                 .newBuilder()
