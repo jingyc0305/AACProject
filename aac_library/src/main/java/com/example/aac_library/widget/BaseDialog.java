@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.PopupWindow;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import com.example.aac_library.R;
@@ -40,7 +39,6 @@ public abstract class BaseDialog extends DialogFragment {
     protected DialogDismissListener mDialogDismissListener;
     protected DialogOnCloseListener mDialogOnCloseListener;
     protected DialogOnStartListener  mDialogOnStartListener;
-    private int selectOption = 0;
     public BaseDialog setmDialogDismissListener(DialogDismissListener mDialogDismissListener) {
         this.mDialogDismissListener = mDialogDismissListener;
         return this;
@@ -103,11 +101,13 @@ public abstract class BaseDialog extends DialogFragment {
     protected static Bundle getArgumentBundle(Builder builder) {
         Bundle bundle = new Bundle();
         bundle.putInt("width", builder.mWidth);
-        bundle.putInt("height", builder.mWidth);
-        bundle.putInt("offset_x", builder.mWidth);
-        bundle.putInt("offset_y", builder.mWidth);
-        bundle.putInt("gravity", builder.mWidth);
-        bundle.putInt("animation", builder.mWidth);
+        bundle.putInt("height", builder.mHeight);
+        bundle.putInt("offset_x", builder.mOffsetX);
+        bundle.putInt("offset_y", builder.mOffsetY);
+        bundle.putInt("gravity", builder.mGravity);
+        bundle.putInt("animation", builder.mAnimation);
+        bundle.putBoolean("is_full", builder.isFull);
+        bundle.putBoolean("is_hide", builder.isHideStatusBar);
         return bundle;
     }
 

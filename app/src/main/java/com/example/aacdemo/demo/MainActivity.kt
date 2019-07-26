@@ -7,6 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.aac_library.eventbus.LiveDataBus
+import com.example.aac_library.utils.image.GlideImageLoader
+import com.example.aac_library.utils.image.ImageLoaderUtil
 import com.example.aacdemo.R
 import com.example.aacdemo.asyntask.AsynActivity
 import com.example.aacdemo.databinding.ActivityMainBinding
@@ -81,6 +83,11 @@ class MainActivity : AppCompatActivity() {
         LiveDataBus.get().with("isReceived",String::class.java)?.observe(this, Observer {
             flag -> viewModel.name?.value = "isReceived: $flag!"
         })
+
+
+        //默认 Glide加载器
+        ImageLoaderUtil.get().loadCircleImage(this,imageView,headIconUrl)
+
     }
 
 

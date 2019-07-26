@@ -10,15 +10,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.bingoogolapple.bgabanner.BGABanner
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.aac_library.base.BaseViewModel
 import com.example.aac_library.base.view.BaseFragment
-import com.example.aac_library.stateview.StatusLayout
+import com.example.aac_library.utils.image.GlideImageLoader
+import com.example.aac_library.utils.image.ImageLoaderUtil
 import com.example.aacdemo.R
-import com.example.aacdemo.wanandroid.home.adapter.HomeArticalAdapter
+import com.example.aacdemo.demo.loadImage
 import com.example.aacdemo.wanandroid.home.adapter.HomeArticalQuickAdapter
 import com.example.aacdemo.wanandroid.home.viewmodel.HomeViewModel
 import io.reactivex.Observable
@@ -50,12 +48,12 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
         homeViewModel?.getBannerLiveData()?.observe(this, Observer {
             mBGABanner?.setAdapter { _, imageView, feedImageUrl, _ ->
                 if (imageView != null) {
-                    Glide.with(activity!!)
-                        .load(feedImageUrl)
-                        .transition(DrawableTransitionOptions().crossFade())
-                        .apply(RequestOptions().error(R.mipmap.banner_empty))
-                        .apply(RequestOptions().placeholder(R.mipmap.banner_empty))
-                        .into(imageView as ImageView)
+                    ImageLoaderUtil
+                        .get()
+                        .setImageLoaderStrategy(GlideImageLoader())
+                        .errorImage(R.mipmap.banner_empty)
+                        .placeholderImage(R.mipmap.banner_empty)
+                        .loadImage(activity!!,imageView as ImageView,feedImageUrl)
                 }
             }
             val bannerUrlList = ArrayList<String>()
