@@ -1,6 +1,5 @@
 package com.example.aacdemo.wanandroid.home.fragment
 
-import androidx.lifecycle.ViewModel
 import com.example.aac_library.base.BaseViewModel
 import com.example.aac_library.base.view.BaseFragment
 import com.example.aacdemo.R
@@ -23,6 +22,9 @@ class MineFragment :BaseFragment(){
     }
     override fun initData() {
         startLoading()
+        android.os.Handler().postDelayed({
+            dismissLoading()
+        }, 2000)
     }
 
     override fun initDataBinding() {

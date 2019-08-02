@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
  * @desc: RetrifitManager統一管理
  */
 public class RetrifitManager {
-
     private static final long READ_TIMEOUT = 10;
     private static final long WRITE_TIMEOUT = 10;
     private static final long CONNECT_TIMEOUT = 10;
@@ -34,7 +33,6 @@ public class RetrifitManager {
     private OkHttpClient okHttpClient;
 
     public RetrifitManager() {
-
     }
 
     private static RetrifitManager instance;

@@ -1,7 +1,6 @@
 package com.example.aacdemo.qrcode;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.aac_library.base.BaseViewModel;
 import com.example.aacdemo.R;
@@ -59,4 +58,13 @@ public class QrCodeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void register() {
+
+    }
+
+    @Override
+    protected void unRegister() {
+
+    }
 }

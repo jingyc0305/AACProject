@@ -15,7 +15,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import com.blankj.utilcode.util.BarUtils;
 import com.example.aac_library.R;
+
 import static android.view.Gravity.CENTER;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -201,19 +203,8 @@ public abstract class BaseDialog extends DialogFragment {
     /**
      * 隐藏状态栏
      */
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void hideStatusBar() {
-        //设置状态栏
-        Intent intent_control_nav = new Intent("com.n4.systemui.control_nav");
-        intent_control_nav.putExtra("state", "hint");
-        getContext().sendBroadcast(intent_control_nav);
-        getDialog().getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        // |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION//隐藏nav栏
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN//隐藏状态栏
-                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY//隐藏状态栏
-        );
+        BarUtils.setStatusBarVisibility(getDialog().getWindow(),false);
     }
 
     public interface DialogDismissListener {

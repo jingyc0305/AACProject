@@ -6,6 +6,7 @@ import com.example.aac_library.http.HttpCode;
 import io.reactivex.observers.DisposableObserver;
 
 /**
+ * @author JingYuchun
  * 自定义Observer 对请求结果进行自定义回调
  * @param <T>
  */
@@ -25,7 +26,6 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
     @Override
     public void onError(Throwable e) {
         e.printStackTrace();
-        Log.d("okhttp", e.getMessage());
         if(null!= e && e instanceof NullPointerException){
             return;
         }else {

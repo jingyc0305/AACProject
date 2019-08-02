@@ -1,13 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.novoda.bintray-release'
 android {
-    compileSdkVersion 28
+    compileSdkVersion 23
 
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
 
@@ -24,6 +25,9 @@ android {
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -62,9 +66,23 @@ dependencies {
 //    api 'com.lxj:xpopup:1.8.7-x'
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    api 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     //glide 处理变换
     implementation 'jp.wasabeef:glide-transformations:2.0.2'
+
+    //android utils
+    api 'com.blankj:utilcodex:1.25.4'
+}
+//添加maven
+publish {
+    repoName = rootProject.repoName
+    artifactId = rootProject.artifactId
+    userOrg = rootProject.userOrg
+    groupId = rootProject.groupId
+    publishVersion = rootProject.publishVersion
+    desc = rootProject.desc
+    website = rootProject.website
+    licences = rootProject.licences
 }

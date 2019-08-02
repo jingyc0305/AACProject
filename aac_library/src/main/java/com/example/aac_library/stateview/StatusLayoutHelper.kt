@@ -28,14 +28,17 @@ class StatusLayoutHelper {
         if (contentLayout?.parent != null) {
             this.parentLayout = contentLayout?.parent as ViewGroup
         } else {
-            this.parentLayout = contentLayout?.rootView?.findViewById(android.R.id.content)
+            this.parentLayout = contentLayout?.rootView?.findViewById(android.R.id.content) as ViewGroup?
         }
         val count = parentLayout?.childCount
-
-        for (index in 0 until count!!) {
-            if (contentLayout === parentLayout?.getChildAt(index)) {
-                this.viewIndex = index
-                break
+        if (count != null) {
+            if (count > 0){
+                for (index in 0 until count!!) {
+                    if (contentLayout === parentLayout?.getChildAt(index)) {
+                        this.viewIndex = index
+                        break
+                    }
+                }
             }
         }
         this.currentLayout = this.contentLayout
@@ -50,8 +53,18 @@ class StatusLayoutHelper {
             val parent = view.parent as? ViewGroup
             parent?.removeView(view)
             if (parentLayout != null) {
-                parentLayout?.removeViewAt(viewIndex!!)
-                parentLayout?.addView(view, viewIndex!!, params)
+                try {
+                    if (parentLayout?.childCount!! == 1){
+                        parentLayout?.removeViewAt(0)
+                        parentLayout?.addView(view, 0, params)
+                    }else{
+                        parentLayout?.removeViewAt(viewIndex!!)
+                        parentLayout?.addView(view, viewIndex!!, params)
+                    }
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
             return true
         }

@@ -8,13 +8,14 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.example.aac_library.base.ICallback
 import com.example.aac_library.base.interf.IRemoteService
+import com.example.aac_library.eventbus.LiveDataBus
 import com.example.aac_library.eventbus.OkBinder
 import com.example.aacdemo.R
 import com.example.aacdemo.service.MyService
 import kotlinx.android.synthetic.main.activity_service.*
-import org.jetbrains.anko.sdk27.coroutines.onClick
 
 /**
  * @author: JingYuchun
@@ -45,16 +46,19 @@ class ServiceActivity : AppCompatActivity(),ServiceConnection{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service)
+        LiveDataBus.get().with("binder_value")?.observe(this, Observer {
+            result -> binder_result_tv.text = result?.toString()
 
-        button.onClick {
+        })
+        button.setOnClickListener {
             if (remoteService != null) {
-                remoteService?.getDataCallBack("hello binder",object:ICallback{
+                remoteService?.doSomething("hello binder",object:ICallback{
                     override val data: String
                         get() = ""
 
                     override fun onResult(result: String) {
                         Log.d("okbinder", "result=$result")
-                        binder_result_tv.text = result
+                        LiveDataBus.get().with("binder_value")?.postValue(result)
                     }
                 })
             }

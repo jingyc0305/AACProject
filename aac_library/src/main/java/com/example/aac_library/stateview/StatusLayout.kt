@@ -10,6 +10,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import com.example.aac_library.R
+import org.w3c.dom.Text
 
 /**
  * @author: JingYuchun
@@ -108,7 +109,7 @@ class StatusLayout {
             loadingLayout = inflater(loadingLayoutID)
         }
         if (!TextUtils.isEmpty(loadingText)) {
-            val loadingTextView = loadingLayout!!.findViewById<TextView>(R.id.tv_status_loading)
+            val loadingTextView = loadingLayout!!.findViewById(R.id.tv_status_loading) as TextView
             loadingTextView?.text = loadingText
         }
     }
@@ -127,7 +128,7 @@ class StatusLayout {
             emptyLayout = inflater(emptyLayoutID)
         }
 
-        val emptyTextView = emptyLayout!!.findViewById<TextView>(R.id.tv_status_empty)
+        val emptyTextView = emptyLayout!!.findViewById(R.id.tv_status_empty) as TextView
 
         if (!TextUtils.isEmpty(emptyText)) {
             emptyTextView?.text = emptyText
@@ -139,7 +140,7 @@ class StatusLayout {
         }
 
         if (emptyImgID > 0) {
-            val emptyImageView = emptyLayout!!.findViewById<ImageView>(R.id.iv_status_empty)
+            val emptyImageView = emptyLayout!!.findViewById(R.id.iv_status_empty)as ImageView
             emptyImageView?.setImageResource(emptyImgID)
         }
 
@@ -168,7 +169,7 @@ class StatusLayout {
         if (null == errorLayout) {
             errorLayout = inflater(errorLayoutID)
         }
-        val errorTextView = errorLayout!!.findViewById<TextView>(R.id.tv_status_error)
+        val errorTextView = errorLayout!!.findViewById(R.id.tv_status_error) as TextView
         if (!TextUtils.isEmpty(errorText)) {
             errorTextView?.text = errorText
         }
@@ -178,7 +179,7 @@ class StatusLayout {
         }
 
         if (errorImgID > 0) {
-            val emptyImageView = errorLayout!!.findViewById<ImageView>(R.id.iv_status_error)
+            val emptyImageView = errorLayout!!.findViewById(R.id.iv_status_error) as ImageView
             emptyImageView?.setImageResource(errorImgID)
         }
 
@@ -226,18 +227,17 @@ class StatusLayout {
         var emptyClickTextColorRes: Int = 0
         var errorClickTextColorRes: Int = 0
 
-        lateinit var statusClickListener: StatusClickListener
+        var statusClickListener: StatusClickListener? = null
 
         constructor(contentLayout: View) {
             this.contentLayout = contentLayout
             this.loadingLayoutID = R.layout.layout_loading
             this.emptyLayoutID = R.layout.layout_empty
             this.errorLayoutID = R.layout.layout_error
-            this.loadingTextColorRes = contentLayout.context.resources.getColor(R.color.text)
-            this.emptyTextColorRes = contentLayout.context.resources.getColor(R.color.title)
-            this.errorTextColorRes = contentLayout.context.resources.getColor(R.color.title)
-            this.emptyClickTextColorRes = contentLayout.context.resources.getColor(R.color.click)
-            this.errorClickTextColorRes = contentLayout.context.resources.getColor(R.color.click)
+            this.emptyTextColorRes = R.color.title
+            this.errorTextColorRes = R.color.title
+            this.emptyClickTextColorRes = R.color.click
+            this.errorClickTextColorRes = R.color.click
         }
 
         fun build(): StatusLayout {

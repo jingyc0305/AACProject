@@ -8,6 +8,7 @@ import com.example.aac_library.base.interf.IBaseView
 
 open class BaseViewModel : ViewModel(), IBaseView {
 
+
     open val actionLiveData =  MutableLiveData<BaseEvent>()
     open var lifecycleOwner: LifecycleOwner? = null
 
@@ -31,7 +32,17 @@ open class BaseViewModel : ViewModel(), IBaseView {
         baseEvent.action = BaseEvent.DISMISS_LOADING_DIALOG
         actionLiveData.value = baseEvent
     }
+    override fun showError(msg: String) {
+        val baseEvent = BaseEvent()
+        baseEvent.action = BaseEvent.SHOW_ERROR_DIALOG
+        actionLiveData.value = baseEvent
+    }
 
+    override fun showEmpty() {
+        val baseEvent = BaseEvent()
+        baseEvent.action = BaseEvent.SHOW_EMPTY
+        actionLiveData.value = baseEvent
+    }
     override fun showToast(msg: String) {
 
         val baseActionEvent = BaseEvent()

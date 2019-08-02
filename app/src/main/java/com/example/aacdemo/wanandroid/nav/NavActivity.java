@@ -39,4 +39,13 @@ public class NavActivity extends BaseActivity {
         navViewModel.setLifecycleOwner(this);
         return navViewModel;
     }
+    @Override
+    protected void register() {
+
+    }
+
+    @Override
+    protected void unRegister() {
+
+    }
 }

@@ -10,18 +10,20 @@ import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 /**
+ * @author JingYuchun
+ * @date
  * 接口请求服务
  */
 public interface ApiService {
 
-    @Headers({HttpConfig.HTTP_REQUEST_TYPE_KEY + ":"+HttpConfig.HTTP_REQUEST_WEATHER})
-    @GET("onebox/weather/query")
-    Observable<BaseResponse<Weather>> getWeather(@Query("cityname") String cityName);
-
-    /**
-     * 生成二维码
-     */
-    @Headers({HttpConfig.HTTP_REQUEST_TYPE_KEY + ":" + HttpConfig.HTTP_REQUEST_QR_CODE})
-    @GET("qrcode/api")
-    Observable<BaseResponse<QrCode>> createQrCode(@Query("text") String text, @Query("width") int width );
+//    @Headers({com.example.business_library.api.HttpConfig.HTTP_REQUEST_TYPE_KEY + ":"+ com.example.business_library.api.HttpConfig.HTTP_REQUEST_WEATHER})
+//    @GET("onebox/weather/query")
+//    Observable<BaseResponse<Weather>> getWeather(@Query("cityname") String cityName);
+//
+//    /**
+//     * 生成二维码
+//     */
+//    @Headers({com.example.business_library.api.HttpConfig.HTTP_REQUEST_TYPE_KEY + ":" + HttpConfig.HTTP_REQUEST_QR_CODE})
+//    @GET("qrcode/api")
+//    Observable<BaseResponse<QrCode>> createQrCode(@Query("text") String text, @Query("width") int width );
 }

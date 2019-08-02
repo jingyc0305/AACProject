@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aacdemo.R
-import com.example.aacdemo.wanandroid.home.bean.HomeArticalBean
+import com.example.business_library.bean.HomeArticalBean
 
 /**
  * @author: JingYuchun
@@ -15,10 +15,10 @@ import com.example.aacdemo.wanandroid.home.bean.HomeArticalBean
  */
 class HomeArticalAdapter(private var onItemClickListener : OnItemClickListener) : RecyclerView.Adapter<HomeArticalAdapter.MyViewHolder>() {
 
-    var articals = mutableListOf<HomeArticalBean.DatasBean>()
+    private var articals = mutableListOf<HomeArticalBean.DatasBean>()
     fun setNewData(datas:MutableList<HomeArticalBean.DatasBean>){
-        this.articals?.clear()
-        this.articals?.addAll(datas)
+        this.articals.clear()
+        this.articals.addAll(datas)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -27,23 +27,23 @@ class HomeArticalAdapter(private var onItemClickListener : OnItemClickListener) 
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.title.text = articals?.get(position)?.title
-        holder.subTitle.text = articals?.get(position)?.chapterName
+        holder.title.text = articals[position].title
+        holder.subTitle.text = articals[position].chapterName
         holder.itemView.setOnClickListener {
-            onItemClickListener?.onItemClick(position)
+            onItemClickListener.onItemClick(position)
         }
         holder.itemView.setOnLongClickListener{
-            onItemClickListener?.onItemLongClick(position)
+            onItemClickListener.onItemLongClick(position)
         }
     }
     override fun getItemCount(): Int{
-        return articals?.size
+        return articals.size
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val title:TextView = itemView.findViewById(R.id.artical_title)
-        val subTitle:TextView = itemView.findViewById(R.id.artical_sub_title)
+        val title:TextView = itemView.findViewById(R.id.artical_title) as TextView
+        val subTitle:TextView = itemView.findViewById(R.id.artical_sub_title) as TextView
 
 
     }

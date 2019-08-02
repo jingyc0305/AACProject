@@ -3,6 +3,8 @@ package com.example.aacdemo.wanandroid.home.fragment
 import com.example.aac_library.base.BaseViewModel
 import com.example.aac_library.base.view.BaseFragment
 import com.example.aacdemo.R
+import kotlinx.android.synthetic.main.frag_home.*
+
 
 /**
  * @author: JingYuchun
@@ -23,6 +25,10 @@ class NavFragment :BaseFragment(){
 
     override fun initData() {
         startLoading()
+        android.os.Handler().postDelayed({
+            dismissLoading()
+        }, 2000)
+
     }
 
     override fun initDataBinding() {

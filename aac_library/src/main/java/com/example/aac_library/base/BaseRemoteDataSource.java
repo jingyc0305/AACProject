@@ -1,5 +1,7 @@
 package com.example.aac_library.base;
 
+import com.blankj.utilcode.util.AppUtils;
+import com.example.aac_library.R;
 import com.example.aac_library.base.interf.IBaseView;
 import com.example.aac_library.base.interf.RequestCallBack;
 import com.example.aac_library.http.HttpCode;
@@ -18,6 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * @author JingYuchun
  * 抽象的接口调用者
  * 将retrofitManager baseSubscriber requestCallback 串联起来
  */
@@ -25,10 +28,10 @@ public abstract class BaseRemoteDataSource {
 
     private CompositeDisposable compositeDisposable;
 
-    private IBaseView ibaseView;
+    private BaseViewModel baseViewModel;
 
-    public BaseRemoteDataSource(IBaseView ibaseView){
-        this.ibaseView = ibaseView;
+    public BaseRemoteDataSource(BaseViewModel baseViewModel){
+        this.baseViewModel = baseViewModel;
         compositeDisposable = new CompositeDisposable();
     }
 
@@ -39,20 +42,20 @@ public abstract class BaseRemoteDataSource {
     public <T> T getService(Class<T> cls,String baseUrl){
         return RetrifitManager.getInstance().getService(cls,baseUrl);
     }
-    protected void execute(Observable observable, RequestCallBack requestCallBack){
+    protected void execute(Observable observable, RequestCallBack requestCallBack,boolean isRefresh){
 
-        execute(observable,new BaseSubscriber(requestCallBack),true);
+        execute(observable,new BaseSubscriber(requestCallBack),true,isRefresh);
 
     }
 
-    private void execute(Observable observable, Observer observer,boolean isDismiss) {
+    private void execute(Observable observable, Observer observer,boolean isDismiss,boolean isRefresh) {
         try {
             Disposable disposable = (Disposable) observable.throttleFirst(500, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .unsubscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(applySchedulers())
-                    .compose(isDismiss?loadingTransformer():loadingTransformerWithoutDismiss())
+                    .compose(isDismiss?loadingTransformer(isRefresh):loadingTransformerWithoutDismiss())
                     .subscribeWith(observer);
             addDisposable(disposable);
         } catch (Exception e) {
@@ -72,23 +75,36 @@ public abstract class BaseRemoteDataSource {
     }
 
     private void startLoading() {
-        if (ibaseView != null) {
-            ibaseView.startLoading();
+        if (baseViewModel != null) {
+            baseViewModel.startLoading();
         }
     }
 
     private void dismissLoading() {
-        if (ibaseView != null) {
-            ibaseView.dismissLoading();
+        if (baseViewModel != null) {
+            baseViewModel.dismissLoading();
         }
     }
-
-    private <T> ObservableTransformer<T, T> loadingTransformer() {
+    private void showError(String msg) {
+        if (baseViewModel != null) {
+            baseViewModel.showError(msg);
+        }
+    }
+    private void showEmpty() {
+        if (baseViewModel != null) {
+            baseViewModel.showEmpty();
+        }
+    }
+    private <T> ObservableTransformer<T, T> loadingTransformer(boolean isRefresh) {
         return observable -> observable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> startLoading())
+                .doOnSubscribe(disposable -> {
+                    if (isRefresh){
+                        startLoading();
+                    }
+                })
                 .doFinally(() -> dismissLoading());
     }
 
@@ -107,20 +123,24 @@ public abstract class BaseRemoteDataSource {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(result -> {
-                    switch (result.getCode()) {
+                    switch (result.getErrorCode()) {
                         case HttpCode.SUCCESS: {
                             return createData(result.getData());
                         }
                         case HttpCode.TOKEN_INVALID: {
+                            showError(BaseApp.getAppContext().getResources().getString(R.string.token_invalid));
                             throw new TokenInvalidException();
                         }
                         case HttpCode.NETWORK_TIME_OUT: {
+                            showError(BaseApp.getAppContext().getResources().getString(R.string.network_time_out));
                             throw new TimeOutException();
                         }
                         case HttpCode.PARAMETER_INVALID: {
+                            showError(BaseApp.getAppContext().getResources().getString(R.string.parameter_invalid));
                             throw new ParamterInvalidException();
                         }
                         default: {
+                            showError(BaseApp.getAppContext().getResources().getString(R.string.error_msg));
                             throw new ServerErrorException();
                         }
                     }

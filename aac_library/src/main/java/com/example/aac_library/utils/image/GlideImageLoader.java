@@ -2,10 +2,10 @@ package com.example.aac_library.utils.image;
 
 import android.content.Context;
 import android.widget.ImageView;
+import com.blankj.utilcode.util.SizeUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.aac_library.utils.util.SizeUtils;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**

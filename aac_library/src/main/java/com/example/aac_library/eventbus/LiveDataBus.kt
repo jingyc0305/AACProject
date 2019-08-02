@@ -70,17 +70,17 @@ class LiveDataBus private constructor() {
             if (!observerMap.containsKey(observer)) {
                 observerMap[observer] = ObserverWrapper(observer)
             }
-            super.observeForever((observerMap[observer] as Observer<in T>)!!)
+            super.observeForever((observerMap[observer] as Observer<in T>))
         }
 
         override fun removeObserver(observer: Observer<in T>) {
-            var realObserver: Observer<*>? = null
+            var realObserver: Observer<*>?
             if (observerMap.containsKey(observer)) {
                 realObserver = observerMap.remove(observer)
             } else {
                 realObserver = observer
             }
-            super.removeObserver((realObserver as Observer<in T>)!!)
+            super.removeObserver((realObserver as Observer<in T>))
         }
 
         override fun removeObservers(owner: LifecycleOwner) {
@@ -95,7 +95,7 @@ class LiveDataBus private constructor() {
             //获取到LiveData类的class对象
             val liveDataClass = LiveData::class.java
             //通过反射区获取LiveData里面的observer
-            val mObservers = liveDataClass!!.getDeclaredField("mObservers")
+            val mObservers = liveDataClass.getDeclaredField("mObservers")
             //设置成员变量可以被访问
             mObservers.isAccessible = true
             //获取这个成员变量的值  它的值是一个Map
@@ -103,7 +103,7 @@ class LiveDataBus private constructor() {
             //获取objectObservers的class对象
             val observerClass = objectObservers.javaClass
             //获取到observerClass里面的get方法
-            val observerGet = observerClass.getDeclaredMethod("get", Any::class.java!!)
+            val observerGet = observerClass.getDeclaredMethod("get", Any::class.java)
             //设置这个observerGet这个对象
             observerGet.isAccessible = true
             //执行该方法 传入一个方法执行在哪个对象中的这个对象 传入执行这个方法所需要的参数
@@ -111,7 +111,7 @@ class LiveDataBus private constructor() {
             //定义一个空的对象
             var objectWrapper: Any? = null
             if (invokeEntry is Map.Entry<*, *>) {
-                objectWrapper = (invokeEntry as Map.Entry<*, *>).value
+                objectWrapper = invokeEntry.value
             }
             if (objectWrapper == null) {
                 throw NullPointerException("Wrapper can not be null!")
@@ -121,7 +121,7 @@ class LiveDataBus private constructor() {
             val mLastVersion = classObserverWrapper!!.getDeclaredField("mLastVersion")
             mLastVersion.isAccessible = true
             //get livedata's version
-            val mVersion = liveDataClass!!.getDeclaredField("mVersion")
+            val mVersion = liveDataClass.getDeclaredField("mVersion")
             mVersion.isAccessible = true
             val objectVersion = mVersion.get(this)
             //把mVersion的值赋值给mLastVersion成员变量达人对象

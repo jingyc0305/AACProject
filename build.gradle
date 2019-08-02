@@ -1,14 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.21'
+    ext.kotlin_version = '1.3.41'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.novoda:bintray-release:0.9'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -19,9 +20,29 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        //maven{ url 'https://dl.bintray.com/jingyc0305/jyc'}
+    }
+    tasks.withType(Javadoc) {
+        options{
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/8/docs/api"
+        }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+//统一声明配置 https://github.com/jingyc0305/AACProject.git
+//key : e0c107e88fbad5a1147a0ba5f8d394f32fb8f171
+ext {
+    repoName = 'jyc'
+    userOrg = 'jingyc0305'
+    groupId = 'com.jyc'
+    artifactId = 'aac_library'
+    publishVersion = '1.0.0'
+    desc = 'a android mvvm framework basic on google jetpack'
+    website = 'https://github.com/jingyc0305/AACProject.git'
+    licences = ['Apache-2.0']
 }

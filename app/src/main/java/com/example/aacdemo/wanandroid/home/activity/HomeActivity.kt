@@ -1,10 +1,10 @@
 package com.example.aacdemo.wanandroid.home.activity
 
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.example.aac_library.base.BaseViewModel
-import com.example.aac_library.base.view.BaseActivity
 import com.example.aacdemo.R
 import kotlinx.android.synthetic.main.act_home.*
 
@@ -13,9 +13,11 @@ import kotlinx.android.synthetic.main.act_home.*
  * @date: 2019/6/27 14:59
  * @desc: 首页
  */
-class HomeActivity: BaseActivity(){
+class HomeActivity: AppCompatActivity(){
     private lateinit var navController: NavController
-    override fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.act_home)
         val  hostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = hostFragment?.navController
         navigation_bottom_view.setOnNavigationItemSelectedListener { menuItem ->
@@ -35,23 +37,7 @@ class HomeActivity: BaseActivity(){
         navigation_bottom_view.let {
             it.setupWithNavController(navController)
         }
-
     }
-
-    override fun initViewModel(): BaseViewModel? {
-        return null
-    }
-
-    override fun initLayoutResId(): Int {
-        return R.layout.act_home
-    }
-
-    override fun initData() {
-    }
-
-    override fun initDataBinding() {
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         navController.navigateUp()

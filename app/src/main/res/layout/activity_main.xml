@@ -9,7 +9,6 @@
         <variable name="user" type="com.example.aacdemo.demo.User"/>
         <variable name="namevm" type="com.example.aacdemo.demo.NameViewModel"/>
         <variable name="handles" type="com.example.aacdemo.demo.MyHandlers"/>
-        <variable name="weather_vm" type="com.example.aacdemo.weather.WeatherViewModel"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent"
                                                        android:layout_width="match_parent">
@@ -41,11 +40,12 @@
         <Button
                 android:id="@+id/button"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="更新数据" tools:ignore="MissingConstraints"
+                android:text="LiveDataBus" tools:ignore="MissingConstraints"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
+                android:textAllCaps="false"
                 app:layout_constraintStart_toEndOf="@+id/data_binding_btn" android:layout_marginStart="8dp"
-                app:layout_constraintHorizontal_bias="0.028" android:layout_marginTop="32dp"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="76dp"
                 app:layout_constraintTop_toBottomOf="@+id/data_bind_tv"/>
         <Button
                 android:id="@+id/data_binding_btn"
@@ -54,6 +54,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
+                android:visibility="gone"
                 android:onClick="@{handles::onClickFriend}"
                 app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="68dp"
                 app:layout_constraintTop_toBottomOf="@+id/hello"/>
@@ -74,25 +75,26 @@
                 android:id="@+id/really_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/button"
                 android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.1"
                 android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/obser_btn"
                 android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/data_bind_tv"
                 app:layout_constraintVertical_bias="1.0"/>
         <Button
-                android:text="观察者模式"
+                android:text="线程安全的观察者模式"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/obser_btn"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.674"
-                android:layout_marginBottom="184dp" app:layout_constraintBottom_toTopOf="@+id/anko_btn"
-                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/button"
-                app:layout_constraintVertical_bias="0.0"/>
+                android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.0"
+                android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/binder_btn"
+                app:layout_constraintVertical_bias="0.015"/>
         <Button
-                android:text="玩安卓"
-                android:layout_width="wrap_content"
+                android:text="网络请求"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/wan_android"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -106,6 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/asyn_btn"
+                android:visibility="gone"
                 android:layout_marginBottom="160dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.0"
@@ -116,6 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/anko_btn"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="400dp" app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
@@ -127,22 +131,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/qr_code_btn"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"
                 android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/data_bind_tv"/>
         <Button
-                android:text="Binder"
+                android:text="Binder通信"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/binder_btn"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="368dp"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.0"
-                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/asyn_btn"
-                app:layout_constraintVertical_bias="0.0"/>
+                android:layout_marginEnd="308dp"
+                android:textAllCaps="false"
+                app:layout_constraintTop_toBottomOf="@+id/button"
+                android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.0" android:layout_marginTop="16dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

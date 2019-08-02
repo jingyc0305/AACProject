@@ -3,14 +3,10 @@ package com.example.aac_library.base;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import com.blankj.utilcode.util.CrashUtils;
 import com.example.aac_library.BuildConfig;
 import com.example.aac_library.utils.util.LoggerUtil;
 import com.sunchen.netbus.NetStatusBus;
-//import skin.support.SkinCompatManager;
-//import skin.support.app.SkinAppCompatViewInflater;
-//import skin.support.app.SkinCardViewInflater;
-//import skin.support.constraint.app.SkinConstraintViewInflater;
-//import skin.support.design.app.SkinMaterialViewInflater;
 
 public class BaseApp extends Application {
 
@@ -23,8 +19,10 @@ public class BaseApp extends Application {
         NetStatusBus.getInstance().init(this);
         registerActivityLifecycleCallbacks(callbacks);
 
-        // 初始化Looger工具
+        // 初始化 Looger工具
         LoggerUtil.init(BuildConfig.DEBUG);
+        // 初始化 崩溃捕获
+        CrashUtils.init();
     }
 
     public static BaseApp getAppContext() {

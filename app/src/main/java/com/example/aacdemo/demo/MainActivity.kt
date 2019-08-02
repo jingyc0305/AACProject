@@ -7,25 +7,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.aac_library.eventbus.LiveDataBus
-import com.example.aac_library.utils.image.GlideImageLoader
 import com.example.aac_library.utils.image.ImageLoaderUtil
 import com.example.aacdemo.R
-import com.example.aacdemo.asyntask.AsynActivity
 import com.example.aacdemo.databinding.ActivityMainBinding
-import com.example.aacdemo.demo.design_pattern.observer_pattern.ObserverActivity
+import com.example.aacdemo.demo.observer_pattern.ObserverActivity
 import com.example.aacdemo.qrcode.QrCodeActivity
 import com.example.aacdemo.wanandroid.home.activity.HomeActivity
+import com.example.aacdemo.weather.WeatherActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.sdk27.coroutines.onClick
-import org.jetbrains.anko.startActivity
 
-
+/**
+ * @author: JingYuchun
+ * @date: 2019年8月1日
+ * @desc:示例demo
+ */
 class MainActivity : AppCompatActivity() {
-
-    private val tag = "kt_tag_MainActivity"
-
     private lateinit var model: NameViewModel
-
     private lateinit var timerViewModel: TimerViewModel
     private val headIconUrl: String = "http://thumb10.jfcdns.com/2018-06/bce5b10ae530f530.png"
     private lateinit var binding: ActivityMainBinding
@@ -34,66 +31,63 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         //初始化数据绑定
         initDataBindnig()
+        //初始化点击事件
+        initClickEvent()
+        //监听标题文字
+        subscribTitle()
+        //监听用户名字
+        subscribNameChange()
+        //监听倒计时更新UI
+        subscribTimer()
+        //LiveDataBus 接收
+        LiveDataBus.get().with("change_name", String::class.java)?.observe(this, Observer { flag ->
+            model.currentName?.value = "昵称: $flag!"
+        })
+        //Glide加载器
+        ImageLoaderUtil.get().loadCircleImage(this, imageView, headIconUrl)
 
-        val nameObserver = Observer<String> {
+    }
+
+    private fun subscribTitle() {
+        val titleObserver = Observer<String> {
             //更新ui
                 newName ->
             hello.text = newName
         }
         val viewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
 
-        viewModel.name?.observe(this, nameObserver)
+        viewModel.name?.observe(this, titleObserver)
 
-        model = ViewModelProviders.of(this).get(NameViewModel::class.java)
+    }
 
-
-        //观察数据变化 更新UI
-        model.currentName.observe(this, nameObserver)
-
-
-        //手动改变数据 更新UI
+    private fun initClickEvent() {
         button.setOnClickListener {
-            //model.currentName.value = "I am LiveData!~"
+            startActivity(Intent(this, BusActivity::class.java))
+        }
+        obser_btn.setOnClickListener {
+            startActivity(Intent(this, ObserverActivity::class.java))
+        }
+        wan_android.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+        binder_btn.setOnClickListener {
+            startActivity(Intent(this, ServiceActivity::class.java))
+        }
+    }
 
-            //测试LiveDataBus
-            sendMessage()
+    private fun subscribNameChange() {
+        model = ViewModelProviders.of(this).get(NameViewModel::class.java)
+        val userNameObserver = Observer<String> {
+            //更新ui
+                newName ->
+            data_bind_tv.text = newName
         }
 
-        //观察数据变化 更新UI
-        subscrib()
-
-        really_btn.setOnClickListener { startActivity(Intent(this, ReallyActivity::class.java)) }
-        qr_code_btn.setOnClickListener { startActivity(Intent(this, QrCodeActivity::class.java)) }
-        anko_btn.onClick {
-            startActivity<AnkoActivity>("param" to "anko")
-        }
-        asyn_btn.onClick {
-            startActivity<AsynActivity>("param" to "asyn")
-        }
-        obser_btn.onClick {
-            startActivity<ObserverActivity>("param" to "obser")
-        }
-        wan_android.onClick {
-            startActivity<HomeActivity>("param" to "android")
-        }
-        binder_btn.onClick {
-            startActivity<ServiceActivity>("param" to "binder")
-        }
-        //测试LiveDataBus
-        LiveDataBus.get().with("isReceived",String::class.java)?.observe(this, Observer {
-            flag -> viewModel.name?.value = "isReceived: $flag!"
-        })
-
-
-        //默认 Glide加载器
-        ImageLoaderUtil.get().loadCircleImage(this,imageView,headIconUrl)
-
+        //监听名字变化
+        model.currentName.observe(this, userNameObserver)
     }
 
 
-    private fun sendMessage(){
-        LiveDataBus.get().with("isReceived")?.value = "I'm from LiveDataBus Data"
-    }
     private fun initDataBindnig() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -102,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         binding.handles = MyHandlers()
     }
 
-    private fun subscrib() {
+    private fun subscribTimer() {
         timerViewModel = ViewModelProviders.of(this).get(TimerViewModel::class.java)
         timerViewModel.elapsedTime.observe(this, Observer { time -> hello.text = "" + time })
     }

@@ -13,5 +13,5 @@ interface IRemoteService {
     /**
      * 通过调用服务端的接口 取得响应结果数据
      */
-    fun getDataCallBack(data:String,callback:ICallback)
+    fun doSomething(data:String,callback:ICallback)
 }

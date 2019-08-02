@@ -19,16 +19,9 @@ interface ICallback {
 }
 
 abstract class BaseService : Service() {
-    private val okBinder = OkBinder(object : IRemoteService {
-
-        override fun getDataCallBack(data: String, callback: ICallback) {
-            Log.d("okbinder", ">> **data = $data ** <<")
-            Log.d("okbinder", ">> **callback.data = ${callback.data} ** <<")
-            callback.onResult("I am from binder callback data")
-        }
-    })
-
+    abstract fun initOkBinder():OkBinder
     override fun onBind(intent: Intent?): IBinder? {
-        return okBinder
+        return initOkBinder()
     }
+
 }

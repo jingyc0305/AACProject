@@ -9,6 +9,10 @@ interface IBaseView {
 
     fun dismissLoading()
 
+    fun showError(msg:String)
+
+    fun showEmpty()
+
     fun showToast(msg: String)
 
     fun finish()

@@ -1,14 +1,15 @@
 package com.example.aac_library.base.view
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.example.aac_library.R
+import androidx.lifecycle.ViewModelProviders
+import com.blankj.utilcode.util.ToastUtils
 import com.example.aac_library.base.BaseViewModel
 import com.example.aac_library.base.event.BaseEvent
 import com.example.aac_library.base.interf.IBaseView
@@ -33,17 +34,22 @@ abstract class BaseFragment : Fragment(), IBaseView {
     private var mRootView: View? = null//缓存fragment View
 
     private var mStatusLayout: StatusLayout? = null
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        isViewPrepare = true
-        initStatusLayout()
-        initView()
-        initDataBinding()
-        initViewModelEvent()
-        //加载数据
-        layzLoadData()
-    }
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//
+//    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (!isViewPrepare){
+            super.onViewCreated(view,savedInstanceState)
+            isViewPrepare = true
+            initStatusLayout()
+            initView()
+            initDataBinding()
+            initViewModelEvent()
+            //加载数据
+            layzLoadData()
+        }
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (mRootView == null) {
             mRootView = inflater.inflate(initLayoutResId(), container, false)
@@ -73,28 +79,28 @@ abstract class BaseFragment : Fragment(), IBaseView {
         }
     }
 
+    /**
+     * 初始化视图状态组件
+     */
     private fun initStatusLayout(){
         if (mStatusLayout == null) {
             mStatusLayout = StatusLayout.Builder(mRootView!!)
                 .setOnStatusClickListener(object : StatusClickListener {
                     override fun onEmptyClick(view: View) {
-                        mStatusLayout?.showLoadingLayout()
-                        Handler().postDelayed({ mStatusLayout?.showContentLayout() }, 3000)
+                        //TODO 子类实现
                     }
 
                     override fun onErrorClick(view: View) {
-                        mStatusLayout?.showLoadingLayout()
-                        Handler().postDelayed({ mStatusLayout?.showEmptyLayout() }, 3000)
+                        //TODO 子类实现
                     }
                 })
                 .build()
         }
     }
     protected abstract fun initLayoutResId(): Int
-//    protected abstract fun initRootView(): View
-
     protected abstract fun initView()
     protected abstract fun initData()
+    //可选
     protected abstract fun initDataBinding()
     protected abstract fun initViewModel(): BaseViewModel?
 
@@ -119,16 +125,16 @@ abstract class BaseFragment : Fragment(), IBaseView {
         mStatusLayout?.showContentLayout()
     }
 
-
-    fun showError(){
+    override fun showError(msg: String) {
         mStatusLayout?.showErrorLayout()
     }
-    fun showEmpty(){
+
+    override fun showEmpty(){
         mStatusLayout?.showEmptyLayout()
     }
     override fun showToast(msg: String) {
 
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
+        ToastUtils.showShort(msg)
     }
 
     override fun onDestroy() {
@@ -164,6 +170,8 @@ abstract class BaseFragment : Fragment(), IBaseView {
                     when (it.action) {
                         BaseEvent.SHOW_LOADING_DIALOG -> startLoading(it.message!!)
                         BaseEvent.DISMISS_LOADING_DIALOG -> dismissLoading()
+                        BaseEvent.SHOW_ERROR_DIALOG -> showError(it.message!!)
+                        BaseEvent.SHOW_EMPTY -> showEmpty()
                         BaseEvent.SHOW_TOAST -> showToast(it.message!!)
                         BaseEvent.FINISH -> finish()
                         BaseEvent.FINISH_WITH_RESULT_OK -> finish()
@@ -172,5 +180,10 @@ abstract class BaseFragment : Fragment(), IBaseView {
 
             })
         }
+    }
+    fun <T : BaseViewModel> getViewModelForFragment(fragment: Fragment, @NonNull modelClass: Class<T>): T {
+
+        return ViewModelProviders.of(fragment).get(modelClass)
+
     }
 }

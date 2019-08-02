@@ -1,8 +1,14 @@
 package com.example.aacdemo.weather;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import com.example.aac_library.base.BaseViewModel;
 
+/**
+ * @author: JingYuchun
+ * @date:
+ * @desc:
+ */
 public class WeatherViewModel extends BaseViewModel {
 
     private MutableLiveData<Weather> weatherMutableLiveData;
