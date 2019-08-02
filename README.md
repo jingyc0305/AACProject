@@ -1,4 +1,4 @@
-# AACProject
+# BaseAndroid[MVVM]
 ViewModel+LiveData+Retrifit+RxJava+DataBinding 组合构架的一个基础MVVM架构
 
 ![img](https://images2018.cnblogs.com/blog/1041439/201803/1041439-20180328145939667-783068993.png)
