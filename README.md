@@ -1,7 +1,82 @@
-# BaseAndroid[MVVM]
-ViewModel+LiveData+Retrifit+RxJava+DataBinding 组合构架的一个基础MVVM架构
+##### **传统的MVC**
 
-![img](https://images2018.cnblogs.com/blog/1041439/201803/1041439-20180328145939667-783068993.png)
+![1041439-20180328145335572-1342686894.png](https://upload-images.jianshu.io/upload_images/8375916-954e27eff2ca9223.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+##### **流行的MVP**
+
+
+
+![img](https://upload-images.jianshu.io/upload_images/8375916-5e36a02fa96f3433.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
+------
+
+##### **基于MVVM构建Android的基础架构**
+
+![img](https://upload-images.jianshu.io/upload_images/8375916-c9526a309d2042fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+##### 使用方法
+
+```
+api 'com.jyc:aac_library:1.0.1'
+```
+
+##### 注意
+
+android support ->必须是androidx
+
+```
+implementation 'androidx.appcompat:appcompat:1.0.2'
+```
+
+base库默认依赖第三方库
+
+```
+//kotlin
+api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+api "androidx.core:core-ktx:1.0.2"
+
+//rxjava2
+api 'io.reactivex.rxjava2:rxjava:2.2.2'
+api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+//retrofit2
+api 'com.squareup.retrofit2:converter-gson:2.5.0'
+api 'com.squareup.retrofit2:retrofit:2.5.0'
+api 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+
+//okhttp
+api 'com.squareup.okhttp3:okhttp:3.14.2'
+api 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+
+//lifecycle 生命周期
+api "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+//net status 全局网络监听
+api 'com.sunchen:netstatusbus:0.1.5'
+
+//base adapter 万能adapter
+api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47-androidx'
+
+// log print 日志打印
+api 'com.orhanobut:logger:2.2.0'
+
+//popup window 万能弹窗
+//api 'com.lxj:xpopup:1.8.7-x'
+
+//glide 图片处理
+api 'com.github.bumptech.glide:glide:4.9.0'
+annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+//glide 处理变换
+implementation 'jp.wasabeef:glide-transformations:2.0.2'
+
+//utils 工具类 很强大
+api 'com.blankj:utilcodex:1.25.4'
+```
+
+
 
 > ##### 界面层(MVVM-V)
 
@@ -32,7 +107,7 @@ VM层即ViewModel : 从Repository 仓库获取数据,对数据进行处理,类�
 
 
 
-![1563789292663](C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\1563789292663.png)
+![](https://upload-images.jianshu.io/upload_images/8375916-c10cb1b6e17efe21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 > #### **UI** 界面
 
@@ -246,21 +321,11 @@ class MyService : BaseService() {
 
 
 
+
 > #### 类图
-
-![1564543470722](C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\1564543470722.png)
-
-
-
-
-
-> #### 层级图
-
-![1563852504876](C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\1563852504876.png)
-
+![类图.png](https://upload-images.jianshu.io/upload_images/8375916-ab9de4233b980bd9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/860)
 
 
 > #### 时序图
-
-![1563853417338](C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\1563853417338.png)
+![1563853417338.png](https://upload-images.jianshu.io/upload_images/8375916-3082170326518ba7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/860)
 
