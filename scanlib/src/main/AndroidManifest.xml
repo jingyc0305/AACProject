@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.n4.scanlib">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <application
+            android:allowBackup="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:supportsRtl="true">
+        <activity android:name="com.example.aacdemo.music.USBMusicActivity">
+        </activity>
+
+        <receiver
+                android:name=".receiver.USBBroadcastReceiver"
+                android:enabled="true"
+                android:exported="true">
+            <intent-filter>
+
+                <!-- filter.addAction("com.n4.devmgr.add"); -->
+                <!-- filter.addAction("com.n4.devmgr.remove"); -->
+                <!-- filter.addAction("com.n4.devmgr.scanStart"); -->
+                <!-- filter.addAction("com.n4.devmgr.scanfinish"); -->
+
+
+                <!-- U盘插入 -->
+                <action android:name="com.n4.devmgr.add"/>
+                <!-- U盘拔出 -->
+                <action android:name="com.n4.devmgr.remove"/>
+                <!-- U盘开始扫描 -->
+                <action android:name="com.n4.devmgr.scanStart"/>
+                <!-- U盘结束扫描 -->
+                <action android:name="com.n4.devmgr.scanfinish"/>
+
+                <!-- 恢复出厂设置 -->
+                <action android:name="com.n4.setting.RESET_FACTORY"/>
+                <action android:name="com.n4.setting.RESET_SYSTEM"/>
+
+                <!-- 电话 -->
+                <action android:name="com.n4.btp.calling"/>
+                <action android:name="com.n4.reverse"/>
+                <action android:name="calling"/>
+                <!-- &lt;!&ndash;U盘插入&ndash;&gt; -->
+                <!-- <action android:name="android.intent.action.MEDIA_MOUNTED" /> -->
+                <!-- &lt;!&ndash;U盘拔出&ndash;&gt; -->
+                <!-- <action android:name="android.intent.action.MEDIA_EJECT" /> -->
+                <!-- &lt;!&ndash;U盘开始扫描&ndash;&gt; -->
+                <!-- <action android:name="android.intent.action.MEDIA_SCANNER_STARTED" /> -->
+                <!-- &lt;!&ndash;U盘结束扫描&ndash;&gt; -->
+                <!-- <action android:name="android.intent.action.MEDIA_SCANNER_FINISHED" /> -->
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

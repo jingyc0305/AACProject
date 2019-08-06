@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
+android {
+    compileSdkVersion 23
+
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+//add greendao
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+    }
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'org.greenrobot:greendao:3.2.2'
+    //add library
+    implementation 'org.greenrobot:greendao-generator:3.2.2'
+
+
+    api project(path: ':aac_library')
+    //api 'com.jyc:aac_library:1.0.1'
+}
