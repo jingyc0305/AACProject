@@ -6,7 +6,7 @@ import com.example.aac_library.base.BaseViewModel;
 import com.example.aac_library.utils.util.LoggerUtil;
 import com.example.aacdemo.R;
 import com.n4.scanlib.dao.MusicBean;
-import com.n4.scanlib.mvvm.USBMusicViewModel;
+import com.n4.scanlib.repo.USBMusicViewModel;
 
 /**
  * @author:

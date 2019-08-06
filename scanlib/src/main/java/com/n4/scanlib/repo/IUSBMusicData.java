@@ -1,4 +1,4 @@
-package com.n4.scanlib.mvvm;
+package com.n4.scanlib.repo;
 
 import com.example.aac_library.base.interf.RequestCallBack;
 import com.n4.scanlib.dao.CustomBean;

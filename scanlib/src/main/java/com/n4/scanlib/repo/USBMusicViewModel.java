@@ -1,9 +1,8 @@
-package com.n4.scanlib.mvvm;
+package com.n4.scanlib.repo;
 
 import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import com.example.aac_library.base.BaseException;
 import com.example.aac_library.base.BaseViewModel;
 import com.n4.scanlib.dao.CustomBean;
 import com.n4.scanlib.dao.MusicBean;

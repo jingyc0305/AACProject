@@ -1,14 +1,12 @@
-package com.n4.scanlib.mvvm;
+package com.n4.scanlib.repo;
 
 import android.content.Context;
-import com.blankj.utilcode.util.AppUtils;
 import com.example.aac_library.base.BaseRemoteDataSource;
 import com.example.aac_library.base.BaseViewModel;
 import com.example.aac_library.base.interf.RequestCallBack;
 import com.n4.scanlib.dao.CustomBean;
 import com.n4.scanlib.dao.MusicBean;
 import com.n4.scanlib.manager.MusicListManager;
-import okhttp3.internal.Util;
 
 import java.util.ArrayList;
 
