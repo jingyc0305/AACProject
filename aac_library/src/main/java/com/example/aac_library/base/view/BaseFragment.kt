@@ -33,11 +33,7 @@ abstract class BaseFragment : Fragment(), IBaseView {
     private var isLoadedData: Boolean = false
     private var mRootView: View? = null//缓存fragment View
 
-    private var mStatusLayout: StatusLayout? = null
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//
-//    }
-
+    var mStatusLayout: StatusLayout? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (!isViewPrepare){
             super.onViewCreated(view,savedInstanceState)

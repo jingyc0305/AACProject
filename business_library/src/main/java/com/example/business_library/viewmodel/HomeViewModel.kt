@@ -3,10 +3,10 @@ package com.example.business_library.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.aac_library.base.BaseViewModel
-import com.example.business_library.bean.HomeArticalBean
-import com.example.business_library.bean.HomeBannerBean
+import com.example.business_library.bean.*
 import com.example.business_library.repository.HomeDataSource
 import com.example.business_library.repository.HomeRepository
+import com.example.business_library.repository.IHomeData
 
 /**
  * @author: JingYuchun
@@ -14,9 +14,14 @@ import com.example.business_library.repository.HomeRepository
  * @desc: 首页ViewModel
  */
 class HomeViewModel: BaseViewModel() {
-    private val articalLiveData: MutableLiveData<HomeArticalBean> = MutableLiveData()
-    private val bannerLiveData: MutableLiveData<MutableList<HomeBannerBean>> = MutableLiveData()
-    private val homeRepository = HomeRepository(HomeDataSource(this))
+    var currMusicState:MusicState? = null
+    var articalLiveData: MutableLiveData<HomeArticalBean> = MutableLiveData()
+    var bannerLiveData: MutableLiveData<MutableList<HomeBannerBean>> = MutableLiveData()
+    //蓝牙状态
+    var blelLiveData : MutableLiveData<BLEState> =  MutableLiveData()
+
+
+    var homeRepository = HomeRepository(HomeDataSource(this))
 
     /**
      * 获取首页文章
@@ -37,11 +42,34 @@ class HomeViewModel: BaseViewModel() {
 
     }
 
-    fun getArticalLiveData(): MutableLiveData<HomeArticalBean> {
-        return articalLiveData
+    fun connectBletooth(isAuto:Boolean){
+        homeRepository.connectBletooth(isAuto).observe(lifecycleOwner!!, Observer {
+            blelLiveData.value  = it
+        })
     }
 
-    fun getBannerLiveData(): MutableLiveData<MutableList<HomeBannerBean>> {
-        return bannerLiveData
+    fun getMusicState(): MusicState? {
+        return currMusicState
+    }
+    fun setMusicState(musicState: MusicState){
+        this.currMusicState = musicState
+    }
+    fun getMusicInfo(): MusicInfo?{
+        return homeRepository.getMusicInfo()
+    }
+    fun playBTMusic(){
+        homeRepository.playBTMusic()
+    }
+    fun playUSBMusic(){
+        homeRepository.playUSBMusic()
+    }
+    fun pauseMusic(){
+        homeRepository.pauseMusic()
+    }
+    fun playPre(){
+        homeRepository.playPre()
+    }
+    fun playNext(){
+        homeRepository.playNext()
     }
 }

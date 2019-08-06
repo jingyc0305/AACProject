@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.example.aac_library.base.BaseException
 import com.example.aac_library.base.BaseRepo
 import com.example.aac_library.base.interf.RequestCallBack
-import com.example.business_library.bean.HomeArticalBean
-import com.example.business_library.bean.HomeBannerBean
+import com.example.business_library.BlEConnectCallBack
+import com.example.business_library.bean.*
 
 /**
  * @author: JingYuchun
@@ -48,6 +48,42 @@ class HomeRepository(remoteDataSource: IHomeData) : BaseRepo<IHomeData>(remoteDa
             }
         })
         return mutableLiveData
+    }
+
+    /**
+     * 连接蓝牙
+     */
+    fun connectBletooth(isAuto:Boolean): MutableLiveData<BLEState>{
+        var bleLiveData = MutableLiveData<BLEState>()
+        remoteDataSource.connectBLEtooth(isAuto,object : BlEConnectCallBack{
+            override fun onBLEConnectSucess(bleState: BLEState) {
+                bleLiveData.value = bleState
+            }
+
+            override fun onBleConnectFailed(bleState: BLEState) {
+                bleLiveData.value = bleState
+            }
+        })
+        return bleLiveData
+    }
+
+    fun getMusicInfo():MusicInfo?{
+        return remoteDataSource.getMusicInfo()
+    }
+    fun playBTMusic(){
+        remoteDataSource.playBTMusic()
+    }
+    fun playUSBMusic(){
+        remoteDataSource.playUSBMusic()
+    }
+    fun pauseMusic(){
+        remoteDataSource.pauseMusic()
+    }
+    fun playPre(){
+        remoteDataSource.playPre()
+    }
+    fun playNext(){
+        remoteDataSource.playNext()
     }
 
 }

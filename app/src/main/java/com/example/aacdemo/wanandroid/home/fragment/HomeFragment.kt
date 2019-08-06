@@ -1,5 +1,6 @@
 package com.example.aacdemo.wanandroid.home.fragment
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Handler
 import android.view.View
@@ -9,11 +10,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.bingoogolapple.bgabanner.BGABanner
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.aac_library.base.BaseViewModel
 import com.example.aac_library.base.view.BaseFragment
 import com.example.aac_library.utils.image.GlideImageLoader
 import com.example.aac_library.utils.image.ImageLoaderUtil
+import com.example.aac_library.utils.util.LoggerUtil
 import com.example.aacdemo.R
 import com.example.aacdemo.wanandroid.home.MyLoadMoreView
 import com.example.aacdemo.wanandroid.home.adapter.HomeArticalQuickAdapter
@@ -40,7 +43,7 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
         //homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         homeViewModel = getViewModelForFragment(this,HomeViewModel::class.java)
         homeViewModel?.lifecycleOwner = this
-        homeViewModel?.getArticalLiveData()?.observe(this, Observer {
+        homeViewModel?.articalLiveData?.observe(this, Observer {
             if (null == it.datas || it.datas.size == 0){
                 showEmpty()
                 return@Observer
@@ -57,9 +60,9 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
             }
         })
 
-        if (homeViewModel?.getBannerLiveData() != null) {
+        if (homeViewModel?.bannerLiveData != null) {
         }
-        homeViewModel?.getBannerLiveData()?.observe(this, Observer {
+        homeViewModel?.bannerLiveData?.observe(this, Observer {
             mBGABanner?.setAdapter { _, imageView, feedImageUrl, _ ->
                 if (imageView != null) {
                     ImageLoaderUtil
@@ -67,7 +70,7 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
                         .setImageLoaderStrategy(GlideImageLoader())
                         .errorImage(R.mipmap.banner_empty)
                         .placeholderImage(R.mipmap.banner_empty)
-                        .loadImage(activity!!,imageView as ImageView,feedImageUrl)
+                        .loadImage(context,imageView as ImageView,feedImageUrl)
                 }
             }
             val bannerUrlList = ArrayList<String>()
@@ -83,6 +86,10 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
             //给banner设置数据
             mBGABanner?.setData(bannerUrlList,bannerTitleList)
 
+        })
+        homeViewModel?.blelLiveData?.observe(this, Observer {
+            showError("")
+            LoggerUtil.d("blestate","connectState:${it.connectState},macAddress:${it.macAddress}")
         })
         return homeViewModel
     }
@@ -125,7 +132,9 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
             }
         },obser_recy)
         adapter?.onItemClickListener = BaseQuickAdapter.OnItemClickListener{
-                _, _, _ ->  showError("")
+                _, _, _ ->  /*showError("")*/
+            //手动连接蓝牙
+            homeViewModel?.connectBletooth(false)
         }
         val manager = LinearLayoutManager(context)
         home_artical_rv.let {
@@ -135,8 +144,6 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener{
         //绑定RecycleView 防止disableLoadMoreIfNotFullPage空指针
         adapter?.bindToRecyclerView(home_artical_rv)
         adapter?.disableLoadMoreIfNotFullPage()
-
-
     }
     override fun initData() {
         homeViewModel?.getHomeBannerData()

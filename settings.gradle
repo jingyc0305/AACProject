@@ -1,1 +1,1 @@
-include ':app', ':aac_library', ':business_library'
+include ':app', ':aac_library', ':business_library', ':scanlib'
