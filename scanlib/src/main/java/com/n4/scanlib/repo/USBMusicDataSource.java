@@ -6,12 +6,12 @@ import com.example.aac_library.base.BaseViewModel;
 import com.example.aac_library.base.interf.RequestCallBack;
 import com.n4.scanlib.dao.CustomBean;
 import com.n4.scanlib.dao.MusicBean;
+import com.n4.scanlib.manager.FavManager;
 import com.n4.scanlib.manager.MusicListManager;
 
 import java.util.ArrayList;
-
 /**
- * @author
+ * @author Lenovo
  * @date 2019年8月6日
  * 具体业务处理
  */
@@ -44,7 +44,7 @@ public class USBMusicDataSource extends BaseRemoteDataSource implements IUSBMusi
 
     @Override
     public <T> void setFavour(MusicBean musicBean, int favourType, RequestCallBack<T> requestCallBack) {
-
+        FavManager.getFavManagerInstance(context).setFavour(musicBean,favourType);
     }
 
     @Override

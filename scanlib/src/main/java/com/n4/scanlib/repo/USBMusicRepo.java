@@ -14,12 +14,18 @@ import java.util.ArrayList;
  */
 public class USBMusicRepo extends BaseRepo<IUSBMusicData> {
     private MutableLiveData<Boolean> newCustomLiveData;
-    private MutableLiveData<ArrayList<MusicBean>> mutableLiveData;
+    MutableLiveData<ArrayList<MusicBean>> usbMusicListLiveData;
+    MutableLiveData<ArrayList<MusicBean>> localMusicListLiveData;
+    MutableLiveData<ArrayList<MusicBean>> customMusicListLiveData;
+    MutableLiveData<ArrayList<MusicBean>> localFavourMusicListLiveData;
     boolean newCustomFlag = false;
     public USBMusicRepo(IUSBMusicData remoteDataSource) {
         super(remoteDataSource);
         newCustomLiveData = new MutableLiveData<>();
-        mutableLiveData = new MutableLiveData<>();
+        usbMusicListLiveData = new MutableLiveData<>();
+        localMusicListLiveData = new MutableLiveData<>();
+        customMusicListLiveData = new MutableLiveData<>();
+        localFavourMusicListLiveData = new MutableLiveData<>();
     }
     //以下为对应具体的业务接口
     // --------------------------------------------
@@ -50,7 +56,7 @@ public class USBMusicRepo extends BaseRepo<IUSBMusicData> {
     }
 
     public void setFavour(MusicBean musicBean, int favourType) {
-
+        remoteDataSource.setFavour(musicBean,favourType,null);
     }
 
     public void favourLocalMusic(MusicBean bean, int favourType) {
@@ -79,17 +85,38 @@ public class USBMusicRepo extends BaseRepo<IUSBMusicData> {
 
             @Override
             public void onSucess(ArrayList<MusicBean> musicBeans) {
-                mutableLiveData.setValue(musicBeans);
+                usbMusicListLiveData.setValue(musicBeans);
             }
         });
-        return mutableLiveData;
+        return usbMusicListLiveData;
     }
 
-    public ArrayList<MusicBean> getAllLocalMusicList() {
-        return null;
+    public MutableLiveData<ArrayList<MusicBean>> getAllLocalMusicList() {
+        remoteDataSource.getAllLocalMusicList(new RequestCallBack<ArrayList<MusicBean>>() {
+            @Override
+            public void onFailed(BaseException error) {
+
+            }
+
+            @Override
+            public void onSucess(ArrayList<MusicBean> musicBeans) {
+                localMusicListLiveData.setValue(musicBeans);
+            }
+        });
+        return localMusicListLiveData;
     }
 
-    public ArrayList<MusicBean> getFavourList() {
-        return null;
+    public MutableLiveData<ArrayList<MusicBean>> getFavourList() {
+        remoteDataSource.getFavourList(new RequestCallBack<ArrayList<MusicBean>>() {
+            @Override
+            public void onFailed(BaseException error) {
+
+            }
+            @Override
+            public void onSucess(ArrayList<MusicBean> musicBeans) {
+                localFavourMusicListLiveData.setValue(musicBeans);
+            }
+        });
+        return localFavourMusicListLiveData;
     }
 }

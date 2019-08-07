@@ -9,7 +9,6 @@ public class Constant {
         MEDIA_SCANNER_FINISH,
 
     }
-
     //music list type
     public static final int TYPE_NO_LIST = -1;
     public static final int LOCAL_MUSIC_LIST = 0;

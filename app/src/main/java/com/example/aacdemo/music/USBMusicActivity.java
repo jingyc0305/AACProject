@@ -42,7 +42,26 @@ public class USBMusicActivity extends BaseActivity {
     protected BaseViewModel initViewModel() {
         mUSBMusicViewModel = ViewModelProviders.of(this).get(USBMusicViewModel.class);
         mUSBMusicViewModel.setLifecycleOwner(this);
-        mUSBMusicViewModel.getUSBMusicRepoLiveData().observe(this, musicBeans -> {
+        //更新USB音乐列表
+        mUSBMusicViewModel.getUsbMusicListLiveData().observe(this, musicBeans -> {
+            for (MusicBean musicBean: musicBeans){
+                LoggerUtil.d(TAG, musicBean.toString());
+            }
+        });
+        //更新本地音乐列表
+        mUSBMusicViewModel.getLocalMusicListLiveData().observe(this, musicBeans -> {
+            for (MusicBean musicBean: musicBeans){
+                LoggerUtil.d(TAG, musicBean.toString());
+            }
+        });
+        //更新本地收藏列表
+        mUSBMusicViewModel.getLocalFavourMusicListLiveData().observe(this, musicBeans -> {
+            for (MusicBean musicBean: musicBeans){
+                LoggerUtil.d(TAG, musicBean.toString());
+            }
+        });
+        //更新custom列表
+        mUSBMusicViewModel.getCustomMusicListLiveData().observe(this, musicBeans -> {
             for (MusicBean musicBean: musicBeans){
                 LoggerUtil.d(TAG, musicBean.toString());
             }

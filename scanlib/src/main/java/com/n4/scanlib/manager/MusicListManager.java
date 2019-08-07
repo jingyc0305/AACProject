@@ -46,15 +46,8 @@ public class MusicListManager {
      * @return
      */
     public ArrayList<MusicBean> getUsbMusicList(){
-//        ArrayList<MusicBean>  musicBeanList = new ArrayList<>();
-//        MusicBean musicBean = new MusicBean();
-//        musicBean.setMusic_name("abc");
-//        musicBean.setUuid("123");
-//        musicBeanList.add(musicBean);
-//
-//        return musicBeanList;
-        return     MediaStoreManager.getMediaStoreManagerInstance(mContext).getAllMusic(DevManager.getDevManagerInstance(mContext).getDevInfo());
-    };
+        return MediaStoreManager.getMediaStoreManagerInstance(mContext).getAllMusic(DevManager.getDevManagerInstance(mContext).getDevInfo());
+    }
 
 
 
@@ -64,7 +57,7 @@ public class MusicListManager {
      */
     public List<MusicBean> getAllLocalMusicList(){
         return DbMusicUtils.getDbMusicUtilsInstance(mContext).queryAllLocalMusic();
-    };
+    }
 
     /**
      * 获取所有收藏歌曲
@@ -72,7 +65,7 @@ public class MusicListManager {
      */
     public List<MusicBean> getFavourList(){
         return DbMusicUtils.getDbMusicUtilsInstance(mContext).queryLocalMusicFavour();
-    };
+    }
 
     /**
      * 获取所有收藏歌曲
@@ -80,7 +73,7 @@ public class MusicListManager {
      */
     public List<CustomBean> getCustomList(){
         return DbMusicUtils.getDbMusicUtilsInstance(mContext).queryCustomList();
-    };
+    }
 
     public void notifyList(int listType){
         switch (listType){
@@ -113,7 +106,10 @@ public class MusicListManager {
                     }
                 }
                 break;
+            default:
+                break;
         }
+
 
     }
 
