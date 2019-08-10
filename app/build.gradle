@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -23,6 +23,9 @@ android {
 
     dataBinding {
         enabled = true
+    }
+    kapt {
+        generateStubs = true
     }
     compileOptions {
         sourceCompatibility = '1.8'
@@ -45,16 +48,18 @@ dependencies {
 
     //support
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    //implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    //implementation 'androidx.appcompat:appcompat:1.0.2'
 
-    //library
-    api project(path: ':business_library')
-    //implementation 'com.jyc:aac_library:1.0.1'
     //navigation
     implementation 'androidx.navigation:navigation-fragment-ktx:2.0.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.0.0'
     //Banner
     implementation 'cn.bingoogolapple:bga-banner:2.2.6@aar'
-    compile project(path: ':scanlib')
+    //library scanlib
+    implementation project(path: ':scanlib')
+    //library business_library
+    api project(path: ':business_library')
+    //library room
+    api project(path: ':roomlib')
 }

@@ -11,9 +11,8 @@ import com.example.aac_library.utils.image.ImageLoaderUtil
 import com.example.aacdemo.R
 import com.example.aacdemo.databinding.ActivityMainBinding
 import com.example.aacdemo.demo.observer_pattern.ObserverActivity
-import com.example.aacdemo.qrcode.QrCodeActivity
 import com.example.aacdemo.wanandroid.home.activity.HomeActivity
-import com.example.aacdemo.weather.WeatherActivity
+import com.example.roomlib.ui.MusicActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main_room)
         //初始化数据绑定
         initDataBindnig()
         //初始化点击事件
@@ -72,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         }
         binder_btn.setOnClickListener {
             startActivity(Intent(this, ServiceActivity::class.java))
+        }
+        room_btn.setOnClickListener {
+            startActivity(Intent(this, MusicActivity::class.java))
         }
     }
 

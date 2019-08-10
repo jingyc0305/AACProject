@@ -15,7 +15,6 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
  */
 public class GlideImageLoader implements BaseImageLoaderStrategy {
 
-//    private RequestOptions requestOptions;
 
     @Override
     public void displayImage(Context context, ImageView imageView, Object imgUrl, RequestOptions requestOptions) {
