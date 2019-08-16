@@ -3,6 +3,7 @@ package com.example.aacdemo.demo
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -13,6 +14,7 @@ import com.example.aacdemo.databinding.ActivityMainBinding
 import com.example.aacdemo.demo.observer_pattern.ObserverActivity
 import com.example.aacdemo.wanandroid.home.activity.HomeActivity
 import com.example.roomlib.ui.MusicActivity
+import com.example.roomlib.ui.MusicGreenDaoActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_room)
+        setContentView(R.layout.activity_main)
         //初始化数据绑定
         initDataBindnig()
         //初始化点击事件
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         subscribTimer()
         //LiveDataBus 接收
         LiveDataBus.get().with("change_name", String::class.java)?.observe(this, Observer { flag ->
-            model.currentName?.value = "昵称: $flag!"
+            model.currentName.value = "昵称: $flag!"
         })
         //Glide加载器
         ImageLoaderUtil.get().loadCircleImage(this, imageView, headIconUrl)
@@ -67,6 +69,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, ObserverActivity::class.java))
         }
         wan_android.setOnClickListener {
+            var tv:TextView? = null
+            tv!!.text = ""
+
             startActivity(Intent(this, HomeActivity::class.java))
         }
         binder_btn.setOnClickListener {
@@ -74,6 +79,9 @@ class MainActivity : AppCompatActivity() {
         }
         room_btn.setOnClickListener {
             startActivity(Intent(this, MusicActivity::class.java))
+        }
+        greendao_btn.setOnClickListener {
+            startActivity(Intent(this, MusicGreenDaoActivity::class.java))
         }
     }
 

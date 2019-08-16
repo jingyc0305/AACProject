@@ -1,1 +1,1 @@
-include ':app', ':aac_library', ':business_library', ':scanlib', ':roomlib'
+include ':app', ':basiclib', ':network_demo', ':scanlib', ':room_demo', ':greendao_demo'

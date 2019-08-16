@@ -59,7 +59,9 @@ dependencies {
     //library scanlib
     implementation project(path: ':scanlib')
     //library business_library
-    api project(path: ':business_library')
+    api project(path: ':network_demo')
     //library room
-    api project(path: ':roomlib')
+    api project(path: ':room_demo')
+    //library greendao
+    api project(path: ':greendao_demo')
 }

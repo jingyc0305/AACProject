@@ -45,6 +45,6 @@ dependencies {
     implementation 'org.greenrobot:greendao-generator:3.2.2'
 
 
-    api project(path: ':aac_library')
+    api project(path: ':basiclib')
     //api 'com.jyc:aac_library:1.0.1'
 }

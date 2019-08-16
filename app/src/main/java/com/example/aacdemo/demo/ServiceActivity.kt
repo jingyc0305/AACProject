@@ -72,4 +72,9 @@ class ServiceActivity : AppCompatActivity(),ServiceConnection{
         bindService(Intent(this, serviceClass), this, Context.BIND_AUTO_CREATE)
         isServiceConnected = true
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindService(this)
+    }
 }

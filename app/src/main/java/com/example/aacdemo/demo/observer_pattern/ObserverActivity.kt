@@ -2,19 +2,23 @@ package com.example.aacdemo.demo.observer_pattern
 
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.animation.BaseAnimation
 import com.example.aac_library.eventbus.LiveDataBus
 import com.example.aac_library.stateview.StatusClickListener
 import com.example.aac_library.stateview.StatusLayout
+import com.example.aac_library.utils.util.LoggerUtil
 import com.example.aacdemo.R
 import kotlinx.android.synthetic.main.activity_observer.*
+import java.lang.Thread.sleep
 
 /**
  * @author: JingYuchun
@@ -27,11 +31,14 @@ class ObserverActivity : AppCompatActivity(), ObserverListener {
     private var adapter: ObserverAdapter? = null
     private var houseOwener: HouseOwener? = null
     private var statusLayout: StatusLayout? = null
+    private var handler :Handler? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //设置布局
         setContentView(R.layout.activity_observer)
         //初始化rv
         initRecycleView()
+        //初始化状态视图
         statusLayout = StatusLayout.Builder(findViewById(R.id.ll_main)).setOnStatusClickListener(object :
             StatusClickListener {
             override fun onEmptyClick(view: View) {
@@ -42,32 +49,43 @@ class ObserverActivity : AppCompatActivity(), ObserverListener {
         }).build()
         //开始进行观察者事件
         initObserver()
-        button_send.setOnClickListener {
+        //初始化点击事件
+        button_send_1.setOnClickListener {
             statusLayout?.showLoadingLayout()
-            MyAsyncTask(houseOwener!!,message1,message2).execute()
+            MyAsyncTask(houseOwener!!,message1,ThingType.MESSAGE).execute()
         }
+        button_send_2.setOnClickListener {
+            //statusLayout?.showLoadingLayout()
+            MyAsyncTask(houseOwener!!,message2,ThingType.PAY).execute()
+        }
+        //监听数据 更新UI
         LiveDataBus.get().with("show_list")?.observe(this, Observer {
             statusLayout?.showContentLayout()
             obser_recy.adapter = adapter
             adapter?.setNewData(it as MutableList<Message>?)
         })
+
+        handler = Handler()
     }
 
+    /**
+     * 初始化RecycleView
+     */
     private fun initRecycleView() {
         obser_recy.layoutManager = LinearLayoutManager(this)
         adapter = ObserverAdapter(mutableListOf())
-        adapter?.openLoadAnimation(BaseQuickAdapter.SCALEIN)
+        adapter?.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM)
         adapter?.isFirstOnly(false)
-        adapter?.disableLoadMoreIfNotFullPage()
-        adapter?.setOnLoadMoreListener({
-
-
-
-
-        },obser_recy)
+//        adapter?.disableLoadMoreIfNotFullPage()
+//        adapter?.setOnLoadMoreListener({
+//            adapter?.loadMoreEnd()
+//        },obser_recy)
         obser_recy.adapter = adapter
     }
 
+    /**
+     * 初始化
+     */
     private fun initObserver() {
         //创建被观察者-房东
         houseOwener = HouseOwener()
@@ -84,16 +102,20 @@ class ObserverActivity : AppCompatActivity(), ObserverListener {
 
     }
 
+    /**
+     * 接收数据
+     */
     override fun notifyChangeData(messageDatas: MutableList<Message>) {
         LiveDataBus.get().with("show_list")?.postValue(messageDatas)
     }
 
-    class MyAsyncTask(private var houseOwener: HouseOwener, private var message1: String, private var message2: String) : AsyncTask<Void, Void, String>(){
+    /**
+     * 发送数据
+     */
+    class MyAsyncTask(private var houseOwener: HouseOwener, private var message: String,private var type: ThingType) : AsyncTask<Void, Void, String>(){
         override fun doInBackground(vararg p0: Void?): String {
-            //发布消息-房租涨价通知
-            houseOwener?.notifyObserver(message1, ThingType.MESSAGE)
-            //发布消息-交房租通知
-            houseOwener?.notifyObserver(message2, ThingType.PAY)
+            //发布消息
+            houseOwener.notifyObserver(message, type)
             return ""
         }
     }

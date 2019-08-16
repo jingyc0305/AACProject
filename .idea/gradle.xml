@@ -8,10 +8,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/aac_library" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/business_library" />
-            <option value="$PROJECT_DIR$/roomlib" />
+            <option value="$PROJECT_DIR$/basiclib" />
+            <option value="$PROJECT_DIR$/greendao_demo" />
+            <option value="$PROJECT_DIR$/network_demo" />
+            <option value="$PROJECT_DIR$/room_demo" />
             <option value="$PROJECT_DIR$/scanlib" />
           </set>
         </option>

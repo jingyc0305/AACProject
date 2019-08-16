@@ -57,11 +57,11 @@ class MessageThread(private val latch: CountDownLatch,private val tenant: Tenant
             when(thingType){
 
                 ThingType.MESSAGE-> {
-                    messageDatas?.add(Message(tenant.getName()+"收到通知",type))
+                    messageDatas.add(Message(tenant.getName()+"收到通知",type))
                     tenant.reciveMsg(ThingType.MESSAGE,message,messageDatas)
                 }
                 ThingType.PAY-> {
-                    messageDatas?.add(Message(tenant.getName()+"交了"+tenant.getMoney(),type))
+                    messageDatas.add(Message(tenant.getName()+"交了"+tenant.getMoney(),type))
                     tenant.reciveMsg(ThingType.PAY,message,messageDatas)
                 }
             }
